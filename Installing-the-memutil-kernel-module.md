@@ -2,9 +2,9 @@
 
 Unfortunately, as of the time of writing, you need a patched kernel.
 
-See \[this page\](<https://kernelnewbies.org/KernelBuild>) on how to compile & install your own kernel.
+See [this page](https://kernelnewbies.org/KernelBuild) on how to compile & install your own kernel.
 
-For fedora, I recommend you follow \[this guide\](<https://fedoraproject.org/wiki/Building_a_custom_kernel#Building_a_kernel_from_the_exploded_git_trees>) and use the instructions under the "Building a kernel from the exploded git trees" section.
+For fedora, I recommend you follow [this guide](https://fedoraproject.org/wiki/Building_a_custom_kernel#Building_a_kernel_from_the_exploded_git_trees) and use the instructions under the *Building a kernel from the exploded git trees* section.
 
 Then add this line:
 
