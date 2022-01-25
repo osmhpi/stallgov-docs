@@ -7,5 +7,7 @@ Our CpuFreq governor is implemented as a kernel module in the [`kernel-module`](
 
 To see how to compile & use the kernel module, see the [README in that folder](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/blob/master/kernel-module/README.md).
 
+For a description of the heuristics in memutil, see: [Memutil Heuristics](Memutil Heuristics)
+
 ## Other Resources
 * Our [project kickoff presentation](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/blob/master/resources/Initial%20Presentation.pdf) that describes our initial research and project motivation.
