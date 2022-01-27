@@ -46,7 +46,7 @@ Heuristic based on this=> reduce frequency, observe whether IPC rises, if so, re
 
 Advantage: Only needs 2, maybe even 0 perf counters (when using Instructions/time), instructions & cycles might not even be a perf counter, but a built-in fixed counter, so we wouldn't need perf counters at all.
 
-Might be problematic for workloads that switch phases frequently, or run sporadically, as it would take longer to make decisions. Noise could also be problematic, as it might indicate the wrong values.
+Might be problematic for workloads that switch phases frequently, or run sporadically, as it would take longer to make decisions. Noise could also be problematic, as it might indicate the also be replacedwrong values.
 
 ### Combination of an immediate heuristic & the expirmenting governor
 Try to combine a heuristic that immediately chooses a frequency with the experimenting governor, so that we could detect&undo unfavorable decisions made by the immediate heuristic.
@@ -54,3 +54,5 @@ Try to combine a heuristic that immediately chooses a frequency with the experim
 ### mem_stalls/stalls_total
 This might be a good way to figure out how truly memory-bound a workload is.
 i.e. was the workload actually stalled due to memory, or something else.
+
+Note: stalls_total could likely be measured with uops_retired.stalls_cycles or uops_executed.stall_cycles
