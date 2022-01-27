@@ -31,7 +31,11 @@ Result: Possibly hard to normalize, workloads behave differently when changing f
 Integer Sort (is) for example shows no difference in stalls/cycle when changing frequency.
 This might be explained by the memory unit being stalled, but there being enough other instructions to execute, so that the execution in total is not stalled.
 
-**TODO: Insert graphs for frequency-stepping tests**
+The results are visualized in the following graph, where the requested frequency, the Instructions/Cycle & Stalls/Cycle are plotted.
+
+There you can see how the different workloads behave differently, making it hard to normalize the stalls/cycle.
+
+![[https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/normalize-stalls/evaluation/memutil-step-frequencies/log.png]]
 
 ### Stalls/Cycle + Instructions/Cycle
 We found that memory-bound workloads tend to have low-IPC&high-Stalls/Cycle on high frequency. A heuristic might try to reduce frequency until IPC is high enough, but only if stalls/cycle is high (i.e. workload is memory-bound).
