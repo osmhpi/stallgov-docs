@@ -83,3 +83,29 @@ counters = [{'counter': ['cycle_activity.cycles_l1d_miss', 'cycle_activity.stall
 ![complete](uploads/1c31c1a0fc03937c3b68226f4ef36e05/complete.png)
 
 ![complete](uploads/47a4f5696a085e13fb73c8e2603efd92/complete.png)
+
+# All Cores - Less Colors
+
+![complete](uploads/2187fcf3682ac7d973a340f184325c6c/complete.png)
+
+![complete](uploads/7486009133d9e146c54dc6cabb8a866f/complete.png)
+
+![complete](uploads/492351ac5bc27a3757a3bc83fde00445/complete.png)
+
+![complete](uploads/8471b4dfdcb31a75aae52dc4002d1700/complete.png)
+
+![complete](uploads/df9b93968fbc5be9a684f74591604028/complete.png)
+
+![complete](uploads/857085ed9449de35cf0bfd03c51f8b05/complete.png)
+
+![complete](uploads/cc1efc0de21e495ccc3a961a89dec011/complete.png)
+
+![complete](uploads/e6d7b7ae6111656335e189adb102f1a3/complete.png)
+
+![complete](uploads/a1f077976ba22c6712b50ff67e860518/complete.png)
+
+![complete](uploads/e0de912212f94527160595acd48e619a/complete.png)
+
+![complete](uploads/846da2bff070c999c99fe54b46d62448/complete.png)
+
+![complete](uploads/0cf2bc9ab61727896de4b07a5c16d8c3/complete.png)
