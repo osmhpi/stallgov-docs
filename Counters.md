@@ -1,4 +1,4 @@
-For the evaluation of the measurements, see the "Evaluation" section at the [bottom of this page](#Evaluation)
+For the evaluation of the measurements, see the "Evaluation" section at the [bottom of this page](#evaluation)
 
 # Measured Counters:
 
