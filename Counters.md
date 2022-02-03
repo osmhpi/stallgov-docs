@@ -1,3 +1,5 @@
+For the evaluation of the measurements, see the "Evaluation" section at the [bottom of this page](#Evaluation)
+
 # Measured Counters:
 
 | Title | Counter 1 | Counter 2 | Counter 3 | plot_op |
@@ -30,7 +32,6 @@ counters = [{'counter': ['cycle_activity.cycles_l1d_miss', 'cycle_activity.stall
             {'counter': ['cycle_activity.stalls_total', 'cycle_activity.stalls_mem_any', 'cpu_clk_unhalted.thread'], 'title': 'Stall_Total_vs_Mem-Stall', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Stalls Total', 'Mem Stalls']},
             {'counter': ['arith.divider_active', 'inst_retired.any', 'cpu_clk_unhalted.thread'], 'title': 'Divider cycles vs IPC', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Divider Cycles', 'IPC']}]
 ```
-
 
 # Just Core 0
 
@@ -109,3 +110,27 @@ counters = [{'counter': ['cycle_activity.cycles_l1d_miss', 'cycle_activity.stall
 ![complete](uploads/846da2bff070c999c99fe54b46d62448/complete.png)
 
 ![complete](uploads/0cf2bc9ab61727896de4b07a5c16d8c3/complete.png)
+
+# Evaluation
+The point of these measurements is to identify hardware performance counters that reliably indicate which tasks benefit from reducing the cores clock frequency.
+This is beneficial if a task is bound by the memory subsystem (L3 cache & main memory), which doesn't depend on the clock frequency of a single core. Therefore reducing the clock frequency will not slow down the task and only save power.
+
+We have thus far been able to categorize the different workloads depending on how much they benefit from a reduced clock frequency:
+1. mg.C - mostly heavily memory-bound, except during a short startup-phase
+2. cg.B - mostly memory-bound, but less so than mg.C
+3. ft.B - in-between, benefiting a lot in runtime performance with increased clock frequency - up to a point.
+4. ep.B - cpu-bound workload - highest frequency here is best
+5. is.C - memory-bound workload, however this workload does *not* benefit much from a reduced frequency!
+
+Most of the counters we measured could correctly identify mg.C, cg.B, as well as is.C as memory-bound, as they are all measuring a significant number of stall cycles due to memory overhead.
+However, the evaluation of the is.C (integer-sort) workload (as seen on the [Heuristics](Memutil heuristics) page) indicates that is.C is memory-bound, yet still benefits from an increased clock core frequency.
+
+Our current working theory is, that this is due to this workload accessing the L1, as well as L2 cache a lot. These caches always belong to a certain core and are clocked with the same frequency, therefore benefiting from the increase in clock frequency.
+However, most of the counters relating to "memory stalls" or other "resource stalls" still treat stalls on these caches as "memory stalls".
+The outlier here though is the number of memory stalls caused by l2-misses, which only identifies mg.C and cg.B as stalling a lot, whilst is.C almost never stalls on l2 misses.
+
+Therefore our heuristic should focus on the counters related to l2 misses, as they directly correlate with the number of l3 cache or main memory accesses that occur. These frequency domains are not influenced by individual core frequencies.
+To better separate the workloads, we will therefore refer to them as on-core bound (meaning bound by anything within the cores frequency domain, including L1&L2 caches), as well as off-core bound, which mainly refers to L3 cache & main memory, but could also be expanded to include other resources in the future, like network or hard drive accesses.
+We might still refer to memory-bound or cpu-bound workloads in our documentation, which should be read as off-core-bound and on-core-bound respectively in most cases.
+
+To read up on the heuristics resulting from these measurements, see the [Memutil Heuristics](Memutil heuristics) page.
