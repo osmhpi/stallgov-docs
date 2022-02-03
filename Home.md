@@ -9,5 +9,7 @@ To see how to compile & use the kernel module, see the [README in that folder](h
 
 For a description of the heuristics in memutil, see: [Memutil Heuristics](Memutil Heuristics)
 
+The different Hardware-Performance counter measurements we tested can be found here: [Counters](Counters)
+
 ## Other Resources
 * Our [project kickoff presentation](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/blob/master/resources/Initial%20Presentation.pdf) that describes our initial research and project motivation.
