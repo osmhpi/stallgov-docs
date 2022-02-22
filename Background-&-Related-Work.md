@@ -34,7 +34,7 @@ However, it backs up the initial assumption that memory-bound workloads benefit 
 
 ## Compile-time dynamic voltage scaling settings - *Xie et al. 2003*
 "Processor Cruise Control" used reactive DVFS to achieve reduced runtime energy consumption.
-This leaves the question whether this can also be achieved pro-actively, i.e. by analyzing the project at compile-time and inserting the appropriate frequency-scaling instructions.
+This leaves the question whether this can also be achieved pro-actively, i.e. by analyzing the code at compile-time and inserting the appropriate frequency-scaling instructions.
 
 Xie et al. work to answer this question in this paper.
 They use two different methods of estimating the power savings achievable by inserting different mode set instructions.
@@ -48,3 +48,35 @@ However, much of the paper is spent discussing how to achieve a good result in c
 It seems the result of their work in this regard is that continually switching between the two frequency/power modes that are closest to the ideal, achieves close to ideal results.
 
 An open question here is how many voltage/frequency pairs are available on a modern CPU and whether the approach of switching between them still leads to closer to ideal results.
+
+## Post-Compiler Optimization - *Schulte et al. 2014*
+As our initial goal for this project was to reduce the energy footprint by means of compiler-optimization, we took a look at this paper, which discussed post-compiler optimization for energy.
+
+It optimized on the compiler-generated assembly code using a machine learning model that mutated the code and used testing to see whether the changes were still valid.
+
+The results of this paper were promising in regards to both performance, as well as energy efficiency.
+However, it showed a clear correlation between runtime performance and power efficiency.
+
+This led us to investigate how a compiler may optimize for power efficiency.
+Digging deeper reveals that power efficiency in regards to instruction generation without Dynamic Voltage and Frequency Scaling (DVFS) is very closely correlated with executing the instructions quicker and therefore already covered by existing research and the existing optimization flags offered by most compilers.
+There is even an [issue regarding this idea](https://bugs.llvm.org/show_bug.cgi?id=6210) in the LLVM Bugtracker.
+
+As shown previously by Xie et al., enriching the program with information for improved DVFS at run-time can definitely be done at compile time.
+
+Further research also pointed toward the use of Heterogeneous Hardware & Computing for improved power efficiency.
+Due to the breadth of that field, we chose to not focus on this for now.
+Instead we went back to investigating DVFS, as that is the established way to reduce energy consumption of a program, without altering its behavior.
+
+## Characterizing the impact of memory-intensity levels - *Kotla et al. 2004*
+This paper is still somewhat connected to our previous research on heterogeneous computing, as it investigates computing on heterogeneous processors, with different kind of processing cores, similar to ARMs Big.Little Architecture.
+They tried to find the best core to run a given workload.
+For the workloads they used different synthetic benchmarks.
+These benchmarks demonstrated that some workloads are indeed bottle-necked by memory, and therefore don't benefit from increased frequency or being executed on a faster processing core.
+
+Similar to the "Processor Cruise Control" system by Bellosa et al., Kotla et al. also base their model on performance counters regarding memory accesses.
+Different from Bellosa, they also take IPC counters into consideration as well.
+
+Like the other papers regarding DVFS, they also demonstrate significant energy savings whilst only observing a slight increase in runtime.
+
+## Dynamic Voltage and Frequency Scaling: The Laws of Diminishing Returns - *Le Sueur et al. 2010*
+In contrast to the previous papers, this paper outlines the future of DVFS, assuming that due to increased transistor leakage and therefore increased static power demand, the benefits of DVFS will less noticeable, or even diminished in the near future.
