@@ -79,4 +79,23 @@ Different from Bellosa, they also take IPC counters into consideration as well.
 Like the other papers regarding DVFS, they also demonstrate significant energy savings whilst only observing a slight increase in runtime.
 
 ## Dynamic Voltage and Frequency Scaling: The Laws of Diminishing Returns - *Le Sueur et al. 2010*
-In contrast to the previous papers, this paper outlines the future of DVFS, assuming that due to increased transistor leakage and therefore increased static power demand, the benefits of DVFS will less noticeable, or even diminished in the near future.
+In contrast to the previous papers, this paper outlines the future of DVFS, assuming that due to increased transistor leakage and therefore increased static power demand, the benefits of DVFS will be less noticeable, or even diminished in the near future.
+
+Due to these concerns, we will need to validate the benfits of DVFS for the modern processor architectures that currently exist.
+
+## Application-Specific Performance-Aware Energy Optimization - *Rao et al. 2017*
+As we still had the initial idea of compile-time energy optimizations in mind, we also searched for more literature in that direction.
+
+Even though our current understanding is that compile-time estimation of runtime-characteristics is difficult at best, there can still be benefit to assess the characteristics of an application off-line.
+This paper outlines an approach that uses a combination of off-line and on-line DVFS scheduling.
+Rao et al. analyze the given programs to find the pair of memory and CPU frequency at which further reduction would reduce the programs execution performance.
+They then combine this approach with an on-line scheduler that monitors the actual runtime performance and increases frequency when performance is too low.
+
+Their approach shows a significant improvement in energy efficiency between 4 and 31%, whilst only loosing up to 1% performance.
+This demonstrates that even on a modern processor with small transistors DVFS can still reap benefits (Nexus 6 -> SOC manufactured on 28nm node).
+However, DVFS should probable be combined with sleep states.
+DVFS on a modern processor should therefore likely focus on not degrading performance, so that the sleep states of the processor can be reached faster.
+
+## Static and Dynamic Frequency Scaling on Multicore CPUs - *Bao et al. 2016*
+
+**ToDo**
