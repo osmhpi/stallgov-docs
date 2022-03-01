@@ -137,6 +137,10 @@ counters = [{'counter': ['l2_fill_pending.l2_fill_busy', 'l2_latency.l2_cycles_w
 
 ![complete](uploads/ba42dbb727ad9ed7ca63d27bbdcf65e8/complete.png)
 
+## Only L2_Fill_Pending Pending plot
+
+![complete](uploads/f4b575f219e8a89cebde7cfcf42a5c37/complete.png)
+
 # Evaluation
 The point of these measurements is to identify hardware performance counters that reliably indicate which tasks benefit from reducing the cores clock frequency.
 This is beneficial if a task is bound by the memory subsystem (L3 cache & main memory), which doesn't depend on the clock frequency of a single core. Therefore reducing the clock frequency will not slow down the task and only save power.
