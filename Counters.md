@@ -127,7 +127,15 @@ counters = [{'counter': ['l2_fill_pending.l2_fill_busy', 'l2_latency.l2_cycles_w
 
 ## All Cores
 
+![complete](uploads/77851d05bf9d55eaba4bc525fd4ef8f2/complete.png)
 
+![complete](uploads/d3f7c3e4be4ff8991e46402b308c0040/complete.png)
+
+![complete](uploads/f9c2bf3c7457603fad5b3e415b1e5901/complete.png)
+
+![complete](uploads/8ab099215027feed77a0c4eef7f94e84/complete.png)
+
+![complete](uploads/ba42dbb727ad9ed7ca63d27bbdcf65e8/complete.png)
 
 # Evaluation
 The point of these measurements is to identify hardware performance counters that reliably indicate which tasks benefit from reducing the cores clock frequency.
