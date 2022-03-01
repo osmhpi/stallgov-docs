@@ -1,6 +1,8 @@
 For the evaluation of the measurements, see the "Evaluation" section at the [bottom of this page](#evaluation)
 
-# Measured Counters:
+# Intel
+
+## Measured Counters:
 
 | Title | Counter 1 | Counter 2 | Counter 3 | plot_op |
 | ----- | --------- | ----------| --------- | ------- |
@@ -33,7 +35,7 @@ counters = [{'counter': ['cycle_activity.cycles_l1d_miss', 'cycle_activity.stall
             {'counter': ['arith.divider_active', 'inst_retired.any', 'cpu_clk_unhalted.thread'], 'title': 'Divider cycles vs IPC', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Divider Cycles', 'IPC']}]
 ```
 
-# Just Core 0
+## Just Core 0
 
 ![complete](uploads/5c32071b5032e5bf3c2d00280b47bb33/complete.png)
 
@@ -85,7 +87,7 @@ counters = [{'counter': ['cycle_activity.cycles_l1d_miss', 'cycle_activity.stall
 
 ![complete](uploads/47a4f5696a085e13fb73c8e2603efd92/complete.png)
 
-# All Cores - Less Colors
+## All Cores - Less Colors
 
 ![complete](uploads/2187fcf3682ac7d973a340f184325c6c/complete.png)
 
@@ -110,6 +112,22 @@ counters = [{'counter': ['cycle_activity.cycles_l1d_miss', 'cycle_activity.stall
 ![complete](uploads/846da2bff070c999c99fe54b46d62448/complete.png)
 
 ![complete](uploads/0cf2bc9ab61727896de4b07a5c16d8c3/complete.png)
+
+# AMD
+
+## Measured Counters:
+
+```python
+counters = [{'counter': ['l2_fill_pending.l2_fill_busy', 'l2_latency.l2_cycles_waiting_on_fills', 'cycles'], 'title': 'L2_Fill_Pending', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Pending', 'Latency']},
+            {'counter': ['ls_dispatch.ld_dispatch', 'ls_dispatch.ld_st_dispatch', 'instructions'], 'title': 'Load Store Inst', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Load', 'Load-Store']},
+            {'counter': ['l2_cache_req_stat.ic_dc_miss_in_l2', 'l2_cache_req_stat.ic_dc_hit_in_l2', 'cycles'], 'title': 'L2_Hitrate', 'plot_op': 'div_1_(1+2)', 'plot_names': ['Hitrate']},
+            {'counter': ['stalled-cycles-backend', 'stalled-cycles-frontend', 'cycles'], 'title': 'Backend-Frontend-Stalls', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Backend', 'Frontend']},
+            {'counter': ['instructions', 'cycles', 'cycles'], 'title': 'IPC', 'plot_op': 'div_1_2', 'plot_names': ['IPC']}]
+```
+
+## All Cores
+
+
 
 # Evaluation
 The point of these measurements is to identify hardware performance counters that reliably indicate which tasks benefit from reducing the cores clock frequency.
