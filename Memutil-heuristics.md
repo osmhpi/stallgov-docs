@@ -2,18 +2,20 @@ For the development of Memutil, we are testing & evaluating different heuristics
 
 # General problem
 Figure out how memory-bound a workload is.
-Complication: high memory-stalls != memory-bound -> memory unit might be stalled, but enough other instructions to execute. Furthermore, the memory that is stalled on might be the L1 or L2 cache, which is in the same clock frequency as the core, therefore benefiting from increased clock frequency.
+Complication: high memory-stalls != memory-bound -> memory unit might be stalled, but enough other instructions are available to execute. Furthermore, the memory that is stalled on might be the L1 or L2 cache, which is in the same clock domain as the core, therefore benefiting from increased clock frequency.
 See the "Evaluation" section of the [Counters](Counters) page for more information.
 
 # Current best heuristic: frequency interpolation on the l2stalls/cycle
-As explained on the [Counters](Counters) page, our evaluation of different performance counters suggested a shift in our categorization from memory-bound vs. cpu-bound toward off-core-bound vs. on-core-bound, as the L1 and L2 cache "memory" is part of the on-core frequency domain of each core. Therefore benefiting from increased clock frequencies.
+As explained on the [Counters](Counters) page, our evaluation of different performance counters suggested a shift in our categorization from memory-bound vs. cpu-bound toward off-core-bound vs. on-core-bound. The L1 and L2 cache "memory" is part of the on-core frequency domain of each core. Therefore benefiting from increased clock frequencies and part of on-core-bound workloads.
 
-In commit cf29e03a we introduced a CpuFreq Governor based on linearly interpolating between the minimum and maximum frequencies, based on the ratio of l2stalls/cycle.
+In commit cf29e03a we introduced a CpuFreq Governor based on linearly interpolating between the minimum and maximum frequencies, depending on the ratio of l2stalls/cycle.
 Where 65% l2 miss-stalls/cycle would result in the minimum clock frequency and 10% l2 miss-stalls/cycle would result in the maximum frequency.
 These values are tuned for a laptop with a core i7 6700HQ and will most likely need to be tweaked for different machines.
 
 Our evaluation for this approach looks very promising, as this heuristic provided benefit in all workloads where this was possible (mg.C, cg.B, ft.B).
 The other workloads are not off-core-bound and therefore don't benefit from frequency adjustments. (apart from turbo boost which we currently cannot control)
+
+Therefore we believe that, for now, focusing on improving the behavior of our governor based on this heuristic is the best approach - at least for Intel processors.
 
 Power/Runtime evaluation:
 ![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/memutil-l2stall-lerp-leon-laptop-nas/evaluation.png)
