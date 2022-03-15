@@ -2,8 +2,8 @@ For the evaluation of the measurements, see the "Evaluation" section at the [bot
 
 # Measured Counters:
 
-| Title | Counter 1 | Counter 2 | Counter 3 | plot_op |
-| ----- | --------- | ----------| --------- | ------- |
+| Title | Counter 1 | Counter 2 | Counter 3 | plot_op | plot names |
+| ----- | --------- | ----------| --------- | ------- | ---------- |
 | L1_Pend_Stall_Cycles | cycle_activity.cycles_l1d_miss | cycle_activity.stalls_l1d_miss | cpu_clk_unhalted.thread | div_1_3+div_2_3 | Pending, Stalls |
 | L2_Pend_Stall_Cycles | cycle_activity.cycles_l2_miss | cycle_activity.stalls_l2_miss | cpu_clk_unhalted.thread | div_1_3+div_2_3 | Pending, Stalls |
 | L3_Pend_Stall_Cycles | cycle_activity.cycles_l3_miss | cycle_activity.stalls_l3_miss | cpu_clk_unhalted.thread | div_1_3+div_2_3 | Pending, Stalls |
