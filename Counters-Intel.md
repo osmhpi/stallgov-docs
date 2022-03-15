@@ -4,18 +4,18 @@ For the evaluation of the measurements, see the "Evaluation" section at the [bot
 
 | Title | Counter 1 | Counter 2 | Counter 3 | plot_op |
 | ----- | --------- | ----------| --------- | ------- |
-| L1_Pend_Stall_Cycles | cycle_activity.cycles_l1d_miss | cycle_activity.stalls_l1d_miss | cpu_clk_unhalted.thread | div_1_3+div_2_3 |
-| L2_Pend_Stall_Cycles | cycle_activity.cycles_l2_miss | cycle_activity.stalls_l2_miss | cpu_clk_unhalted.thread | div_1_3+div_2_3 |
-| L3_Pend_Stall_Cycles | cycle_activity.cycles_l3_miss | cycle_activity.stalls_l3_miss | cpu_clk_unhalted.thread | div_1_3+div_2_3 |
-| L1_Hitrate | mem_load_retired.l1_hit | mem_load_retired.l1_miss | cpu_clk_unhalted.thread | div_1_(1+2) |
-| L2_Hitrate | mem_load_retired.l2_hit | mem_load_retired.l2_miss | cpu_clk_unhalted.thread | div_1_(1+2) |
-| L3_Hitrate | mem_load_retired.l3_hit | mem_load_retired.l3_miss | cpu_clk_unhalted.thread | div_1_(1+2) |
-| U_Execute-Stall_vs_Mem-Stall | uops_executed.stall_cycles | cycle_activity.stalls_mem_any | cpu_clk_unhalted.thread | div_1_3+div_2_3 |
-| U_Retired-Stall_vs_Mem-Stall | uops_retired.stall_cycles | cycle_activity.stalls_mem_any | cpu_clk_unhalted.thread | div_1_3+div_2_3 |
-| U_Issued-Stall_vs_Mem-Stall | uops_issued.stall_cycles | cycle_activity.stalls_mem_any | cpu_clk_unhalted.thread | div_1_3+div_2_3 |
-| U_Resource-Stall_vs_Mem-Stall | resource_stalls.any | cycle_activity.stalls_mem_any | cpu_clk_unhalted.thread | div_1_3+div_2_3 |
-| Stall_Total_vs_Mem-Stall | cycle_activity.stalls_total | cycle_activity.stalls_mem_any | cpu_clk_unhalted.thread | div_1_3+div_2_3 |
-| Divider cycles vs IPC | arith.divider_active | inst_retired.any | cpu_clk_unhalted.thread | div_1_3+div_2_3 |
+| L1_Pend_Stall_Cycles | cycle_activity.cycles_l1d_miss | cycle_activity.stalls_l1d_miss | cpu_clk_unhalted.thread | div_1_3+div_2_3 | Pending, Stalls |
+| L2_Pend_Stall_Cycles | cycle_activity.cycles_l2_miss | cycle_activity.stalls_l2_miss | cpu_clk_unhalted.thread | div_1_3+div_2_3 | Pending, Stalls |
+| L3_Pend_Stall_Cycles | cycle_activity.cycles_l3_miss | cycle_activity.stalls_l3_miss | cpu_clk_unhalted.thread | div_1_3+div_2_3 | Pending, Stalls |
+| L1_Hitrate | mem_load_retired.l1_hit | mem_load_retired.l1_miss | cpu_clk_unhalted.thread | div_1_(1+2) | Hitrate |
+| L2_Hitrate | mem_load_retired.l2_hit | mem_load_retired.l2_miss | cpu_clk_unhalted.thread | div_1_(1+2) | Hitrate |
+| L3_Hitrate | mem_load_retired.l3_hit | mem_load_retired.l3_miss | cpu_clk_unhalted.thread | div_1_(1+2) | Hitrate |
+| U_Execute-Stall_vs_Mem-Stall | uops_executed.stall_cycles | cycle_activity.stalls_mem_any | cpu_clk_unhalted.thread | div_1_3+div_2_3 | Execute Stalls, Mem Stalls |
+| U_Retired-Stall_vs_Mem-Stall | uops_retired.stall_cycles | cycle_activity.stalls_mem_any | cpu_clk_unhalted.thread | div_1_3+div_2_3 | Retired Stalls, Mem Stalls |
+| U_Issued-Stall_vs_Mem-Stall | uops_issued.stall_cycles | cycle_activity.stalls_mem_any | cpu_clk_unhalted.thread | div_1_3+div_2_3 | Issued Stalls, Mem Stalls |
+| U_Resource-Stall_vs_Mem-Stall | resource_stalls.any | cycle_activity.stalls_mem_any | cpu_clk_unhalted.thread | div_1_3+div_2_3 | Resource Stalls, Mem Stalls |
+| Stall_Total_vs_Mem-Stall | cycle_activity.stalls_total | cycle_activity.stalls_mem_any | cpu_clk_unhalted.thread | div_1_3+div_2_3 | Stalls Total, Mem Stalls |
+| Divider cycles vs IPC | arith.divider_active | inst_retired.any | cpu_clk_unhalted.thread | div_1_3+div_2_3 | Divider Cycles, IPC |
 
 
 ```python
