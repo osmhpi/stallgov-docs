@@ -1,8 +1,6 @@
 For the evaluation of the measurements, see the "Evaluation" section at the [bottom of this page](#evaluation)
 
-# Intel
-
-## Measured Counters:
+# Measured Counters:
 
 | Title | Counter 1 | Counter 2 | Counter 3 | plot_op |
 | ----- | --------- | ----------| --------- | ------- |
@@ -35,7 +33,7 @@ counters = [{'counter': ['cycle_activity.cycles_l1d_miss', 'cycle_activity.stall
             {'counter': ['arith.divider_active', 'inst_retired.any', 'cpu_clk_unhalted.thread'], 'title': 'Divider cycles vs IPC', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Divider Cycles', 'IPC']}]
 ```
 
-## Just Core 0
+# Just Core 0
 
 ![complete](uploads/5c32071b5032e5bf3c2d00280b47bb33/complete.png)
 
@@ -63,32 +61,6 @@ counters = [{'counter': ['cycle_activity.cycles_l1d_miss', 'cycle_activity.stall
 
 # All Cores
 
-![complete](uploads/9d1f90ba70adf02e53f4bcedca7fdbf5/complete.png)
-
-![complete](uploads/40c8dac9e59fa66be183f1837f152c15/complete.png)
-
-![complete](uploads/28c716034adf20f6d5b61399c353986e/complete.png)
-
-![complete](uploads/0e7ff7ac3826f904e841aa4a1571cd2c/complete.png)
-
-![complete](uploads/4bfa3bf1fcbf6a65f202082ff89c68aa/complete.png)
-
-![complete](uploads/a556fb0d3af331d4befa200449cff24b/complete.png)
-
-![complete](uploads/71ae579c9dcd0d3fd1eef49a63e0a0d3/complete.png)
-
-![complete](uploads/986b6d2406fdd5b18529c5e476c3ce26/complete.png)
-
-![complete](uploads/f8573cf0a41f684bb61301c0dddead8e/complete.png)
-
-![complete](uploads/dfaad079146388b0a1c12998dfea87f5/complete.png)
-
-![complete](uploads/1c31c1a0fc03937c3b68226f4ef36e05/complete.png)
-
-![complete](uploads/47a4f5696a085e13fb73c8e2603efd92/complete.png)
-
-## All Cores - Less Colors
-
 ![complete](uploads/2187fcf3682ac7d973a340f184325c6c/complete.png)
 
 ![complete](uploads/7486009133d9e146c54dc6cabb8a866f/complete.png)
@@ -112,44 +84,6 @@ counters = [{'counter': ['cycle_activity.cycles_l1d_miss', 'cycle_activity.stall
 ![complete](uploads/846da2bff070c999c99fe54b46d62448/complete.png)
 
 ![complete](uploads/0cf2bc9ab61727896de4b07a5c16d8c3/complete.png)
-
-# AMD
-
-## Measured Counters:
-
-```python
-counters = [{'counter': ['l2_fill_pending.l2_fill_busy', 'l2_latency.l2_cycles_waiting_on_fills', 'cycles'], 'title': 'L2_Fill_Pending', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Pending', 'Latency']},
-            {'counter': ['ls_dispatch.ld_dispatch', 'ls_dispatch.ld_st_dispatch', 'instructions'], 'title': 'Load Store Inst', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Load', 'Load-Store']},
-            {'counter': ['l2_cache_req_stat.ic_dc_miss_in_l2', 'l2_cache_req_stat.ic_dc_hit_in_l2', 'cycles'], 'title': 'L2_Hitrate', 'plot_op': 'div_1_(1+2)', 'plot_names': ['Hitrate']},
-            {'counter': ['stalled-cycles-backend', 'stalled-cycles-frontend', 'cycles'], 'title': 'Backend-Frontend-Stalls', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Backend', 'Frontend']},
-            {'counter': ['instructions', 'cycles', 'cycles'], 'title': 'IPC', 'plot_op': 'div_1_2', 'plot_names': ['IPC']},
-            {'counter': ['l3_cache_accesses', 'l3_misses', 'cycles'], 'title': 'L3 per Cycle', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Accesses per Cycle', 'Misses per Cycle']},
-            {'counter': ['l2_cache_req_stat.ic_dc_miss_in_l2', 'l2_cache_req_stat.ic_dc_hit_in_l2', 'cycles'], 'title': 'L2 per Cycle', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Misses per Cycle', 'Hits per Cycle']},
-            {'counter': ['l2_pf_miss_l2_hit_l3', 'l2_pf_miss_l2_l3', 'cycles'], 'title': 'L2 PF Miss per Cycle', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['L2 PF Miss, L3 Hit per Cycle', 'L2 PF Miss, L3 Miss per Cycle']}]
-
-```
-
-## All Cores
-
-![complete](uploads/77851d05bf9d55eaba4bc525fd4ef8f2/complete.png)
-
-![complete](uploads/d3f7c3e4be4ff8991e46402b308c0040/complete.png)
-
-![complete](uploads/f9c2bf3c7457603fad5b3e415b1e5901/complete.png)
-
-![complete](uploads/8ab099215027feed77a0c4eef7f94e84/complete.png)
-
-![complete](uploads/ba42dbb727ad9ed7ca63d27bbdcf65e8/complete.png)
-
-![complete](uploads/a52da1dc1eebbb7ccbe0853c5aa4b532/complete.png)
-
-![complete](uploads/f40924bfdad4b2129a192e51eb291317/complete.png)
-
-![complete](uploads/4de01bc42a5824987cada5926cf7cf35/complete.png)
-
-## Only L2_Fill_Pending Pending plot
-
-![complete](uploads/f4b575f219e8a89cebde7cfcf42a5c37/complete.png)
 
 # Evaluation
 The point of these measurements is to identify hardware performance counters that reliably indicate which tasks benefit from reducing the cores clock frequency.
