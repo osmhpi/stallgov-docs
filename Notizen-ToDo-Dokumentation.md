@@ -1,6 +1,7 @@
 # Timeline
 - Abgabe Artefakte - Ende des Semesters - 31.03. - Präsentation sollte fertig sein
 - Präsentation - Beginn der Vorlesungszeit - 12.04.
+    - Dauer: 30 min. inkl. Fragen
 
 # ToDo - Evaluierung & Dokumentation
 - [ ] Reproduzierbarkeit
