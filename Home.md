@@ -14,7 +14,7 @@ The broad architecture of memutil is explained [here](Memutil Architecture).
 
 For a description of the heuristics in memutil, see: [Memutil Heuristics](Memutil Heuristics)
 
-The different Hardware-Performance counter measurements we tested can be found here: [Counters](Counters)
+The different Hardware-Performance counter measurements we tested can be found here: [Counters (Intel)](Counters Intel) and [Counters AMD](Counters AMD)
 
 ## Other Resources
 * Our [project kickoff presentation](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/blob/master/resources/Initial%20Presentation.pdf) that describes our initial research and project motivation.
