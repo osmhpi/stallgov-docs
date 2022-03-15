@@ -51,7 +51,7 @@ There are 3 ways a CpuFreq governor can change the power state
 - Fast-switching frequency
     - The governor chooses a frequency in KHz and instructs the CPU to change to it
     - Setting the frequency is done without locking
-    - Currently fast-switching only seems to be available on recent Intel CPUs
+    - Of the CPUs availabe to us, currently fast-switching is only available on the recent Intel CPUs
 - "Normal" frequency switching
     - The governor chooses a frequency in KHz and instructs the CPU to change to it
     - Setting the frequency needs locking and is therefore done in a separate thread
@@ -103,6 +103,7 @@ It updates the CPU frequency every time it is called.
 The update hook does a few checks to make sure the frequency for the current core can actually be set.
 Then it calls the `memutil_update_frequency` method, which reads the performance counters, chooses an appropriate frequency and then sets the frequency.
 This is done either by using a fast-switch call, or by storing the requested frequency so it can be updated later by the kernel thread responsible for slow switching the frequency.
+For an explanation of how the frequency is chosen, see the [Heuristics page](Memutil Heuristics).
 
 ## stop
 The `stop` method basically undoes everything done in the `start` method, de-allocating the performance counters, etc.
