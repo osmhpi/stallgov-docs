@@ -63,7 +63,7 @@ The results are visualized in the following graph, where the requested frequency
 
 There you can see how the different workloads behave differently, making it hard to normalize the stalls/cycle.
 
-![[https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/normalize-stalls/evaluation/results/memutil-step-frequencies/log.png]]
+![[https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/normalize-stalls/evaluation/memutil-step-frequencies/log.png]]
 
 **Update:** We conducted these measurements with the general memory stall performance counters. As discussed above, as well as on the [Intel Counters](Counters-Intel) page, it is better to divide the memory stalls into on-core (L1&L2) and off-core (L3&RAM) memory stalls.
 So this approach of normalizing the stalls, based on the current frequency might be a feasible, but needs to be updated to use the L2 stalls instead of total memory stalls.
