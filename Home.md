@@ -16,5 +16,8 @@ For a description of the heuristics in memutil, see: [Memutil Heuristics](Memuti
 
 The different Hardware-Performance counter measurements we tested can be found [here for Intel](Counters Intel) and [here for AMD](Counters AMD)
 
+## Future Work
+See [this page](Future work).
+
 ## Other Resources
 * Our [project kickoff presentation](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/blob/master/resources/Initial%20Presentation.pdf) that describes our initial research and project motivation.
