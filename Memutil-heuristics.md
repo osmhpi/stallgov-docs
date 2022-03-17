@@ -3,16 +3,16 @@ For the development of Memutil, we are testing & evaluating different heuristics
 # General problem
 Figure out how memory-bound a workload is.
 Complication: high memory-stalls != memory-bound -> memory unit might be stalled, but enough other instructions are available to execute. Furthermore, the memory that is stalled on might be the L1 or L2 cache, which is in the same clock domain as the core, therefore benefiting from increased clock frequency.
-See the "Evaluation" section of the [Counters](Counters) page for more information.
+See the "Evaluation" section of the [Intel Counters](Counters-Intel) page for more information.
 
-# Current best heuristic: frequency interpolation on the l2stalls/cycle
-As explained on the [Counters](Counters) page, our evaluation of different performance counters suggested a shift in our categorization from memory-bound vs. cpu-bound toward off-core-bound vs. on-core-bound. The L1 and L2 cache "memory" is part of the on-core frequency domain of each core. Therefore benefiting from increased clock frequencies and part of on-core-bound workloads.
+# Current best heuristic: frequency interpolation on the l2stalls/cycle (Intel)
+As explained on the [Counters](Counters-Intel) page, our evaluation of different performance counters suggested a shift in our categorization from memory-bound vs. cpu-bound toward off-core-bound vs. on-core-bound. The L1 and L2 cache "memory" is part of the on-core frequency domain of each core. Therefore benefiting from increased clock frequencies and part of on-core-bound workloads.
 
 In commit cf29e03a we introduced a CpuFreq Governor based on linearly interpolating between the minimum and maximum frequencies, depending on the ratio of l2stalls/cycle.
-Where 65% l2 miss-stalls/cycle would result in the minimum clock frequency and 10% l2 miss-stalls/cycle would result in the maximum frequency.
+Where 65% l2-miss-stalls/cycle would result in the minimum clock frequency and 10% l2-miss-stalls/cycle would result in the maximum frequency.
 These values are tuned for a laptop with a core i7 6700HQ and will most likely need to be tweaked for different machines.
 
-Our evaluation for this approach looks very promising, as this heuristic provided benefit in all workloads where this was possible (mg.C, cg.B, ft.B).
+Our evaluation for this approach looks very promising, as this heuristic provided benefit in all off-core-bound workloads (mg.C, cg.B, ft.B).
 The other workloads are not off-core-bound and therefore don't benefit from frequency adjustments. (apart from turbo boost which we currently cannot control)
 
 Therefore we believe that, for now, focusing on improving the behavior of our governor based on this heuristic is the best approach - at least for Intel processors.
@@ -26,8 +26,8 @@ Memutil log:
 Further research is needed on the behavior of the l2stalls metric at different frequencies, the best behavior at idle, as well as the effects of switching the frequency quickly/radically.
 
 # Other evaluated heuristics
-## Stalls/Cycle bounds
-We identified Stalls/Cycle (cycle_activity.stalls_mem_any/cpu_clk_unhalted.thread on Intel) as a great metric to determine the level of memory-boundness a process is experiencing.
+## Memory Stalls/Cycle bounds
+We identified Memory Stalls/Cycle (cycle_activity.stalls_mem_any/cpu_clk_unhalted.thread on Intel) as a great metric to determine the level of memory-boundness a process is experiencing.
 Because there can never be more stalls than cycles, this metric is normalized for any processor between 0 and 1. It also directly measures the wasted cycles that occured during any given operation, which we aim to minimize.
 
 The first heuristic we tested with this metric is to try to target to keep it between two values. Initial testing suggested a value between 25% and 75%.
@@ -65,15 +65,18 @@ There you can see how the different workloads behave differently, making it hard
 
 ![[https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/normalize-stalls/evaluation/memutil-step-frequencies/log.png]]
 
+**Update:** We conducted these measurements with the general memory stall performance counters. As discussed above, as well as on the [Intel Counters](Counters-Intel) page, it is better to divide the memory stalls into on-core (L1&L2) and off-core (L3&RAM) memory stalls.
+So this approach of normalizing the stalls, based on the current frequency might be a feasible, but needs to be updated to use the L2 stalls instead of total memory stalls.
+
 ## Experimenting governor - reduce frequency and observe Instructions/Cycle
 For a memory-bound workload, IPC should increase when reducing frequency.
 Heuristic based on this=> reduce frequency, observe whether IPC rises, if so, reduce Frequency further, otherwise revert to higher frequency.
 
 Advantage: Only needs 2, maybe even 0 perf counters (when using Instructions/time), instructions & cycles might not even be a perf counter, but a built-in fixed counter, so we wouldn't need perf counters at all.
 
-Might be problematic for workloads that switch phases frequently, or run sporadically, as it would take longer to make decisions. Noise could also be problematic, as it might indicate the also be replacedwrong values.
+Might be problematic for workloads that switch phases frequently, or run sporadically, as it would take longer to make decisions. Noise could also be problematic, as it might indicate wrong values.
 
-## Combination of an immediate heuristic & the expirmenting governor
+## Combination of an immediate heuristic & the experimenting governor
 Try to combine a heuristic that immediately chooses a frequency with the experimenting governor, so that we could detect&undo unfavorable decisions made by the immediate heuristic.
 
 ## mem_stalls/stalls_total
