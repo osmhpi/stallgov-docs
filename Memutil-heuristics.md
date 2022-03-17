@@ -18,10 +18,10 @@ The other workloads are not off-core-bound and therefore don't benefit from freq
 Therefore we believe that, for now, focusing on improving the behavior of our governor based on this heuristic is the best approach - at least for Intel processors.
 
 Power/Runtime evaluation:
-![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/memutil-l2stall-lerp-leon-laptop-nas/evaluation.png)
+![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/evaluation.png)
 
 Memutil log:
-![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/memutil-l2stall-lerp-leon-laptop-nas/log-core0.png)
+![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/log-core0.png)
 
 Further research is needed on the behavior of the l2stalls metric at different frequencies, the best behavior at idle, as well as the effects of switching the frequency quickly/radically.
 
@@ -35,9 +35,9 @@ If the stalls/cycle exceed 75%, the CPU frequency ought to be reduced and if it 
 If the CPU is clocked slower, the stalls/cycle should decrease, as the memory system has more time to catch up. And if the CPU frequency is increased, the stalls should increase, as the CPU is going to request more memory faster.
 
 This initial implementation showed promise on the Multi-Grid (mg) NAS Benchmark, where it chose a low frequency for the main task of the benchmark but still performed with a runtime close to the fastest frequency tested, whilst consuming even less energy than usual for its average frequency.
-![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/memutil-bounds-no-de-leon-laptop-nas-benchmarks/evaluation.png)
+![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-bounds-no-de-leon-laptop-nas-benchmarks/evaluation.png)
 
-![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/memutil-bounds-no-de-leon-laptop-nas-benchmarks/log.png)
+![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-bounds-no-de-leon-laptop-nas-benchmarks/log.png)
 This second graph shows both the chosen frequency (between 0.8 and 2.6GHz), as well as the stalls/cycle (between 0-1 at the bottom) for each of the 8 cores.
 
 We even see a slight benefit with memutil in the cg benchmark, however, as the stalls/cycle in this benchmark are only slightly above 75%, memutil doesn't reduce the CPU speed far enough.
@@ -49,7 +49,7 @@ We found that memory-bound workloads tend to have low-IPC&high-Stalls/Cycle on h
 
 A heuristic based on this approach didn't seem to produce the desired results though, as certain tasks exhibited low-ipc&high memory stalls, whilst still not being off-core bound (i.e. the setup phase in mg.C), which caused memutil to chose frequencies too low for the workloads characteristics.
 
-![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/memutil-ipc-spc-leon-laptop-nas/evaluation.png)
+![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-ipc-spc-leon-laptop-nas/evaluation.png)
 
 # Further ideas
 ## Normalized stalls/cycle
@@ -63,7 +63,7 @@ The results are visualized in the following graph, where the requested frequency
 
 There you can see how the different workloads behave differently, making it hard to normalize the stalls/cycle.
 
-![[https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/normalize-stalls/evaluation/memutil-step-frequencies/log.png]]
+![[https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/normalize-stalls/evaluation/results/memutil-step-frequencies/log.png]]
 
 **Update:** We conducted these measurements with the general memory stall performance counters. As discussed above, as well as on the [Intel Counters](Counters-Intel) page, it is better to divide the memory stalls into on-core (L1&L2) and off-core (L3&RAM) memory stalls.
 So this approach of normalizing the stalls, based on the current frequency might be a feasible, but needs to be updated to use the L2 stalls instead of total memory stalls.
