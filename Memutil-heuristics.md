@@ -39,6 +39,22 @@ Power/Runtime evaluation:
 Memutil log:
 ![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-erik-amd-ipc/log-core0.png)
 
+# Heuristic implementation details
+The heuristic that is used is defined in `memutil_main.c` with either `#define HEURISTIC HEURISTIC_OFFCORE_STALLS` to use the L2-stalls/cycle heuristic or with `#define HEURISTIC HEURISTIC_IPC` to use the IPC based heuristic.
+
+Both heuristics are based on a linear interpolation which chooses the frequency as:
+
+```math
+freq_{current} = \alpha \cdot (freq_{max} - freq_{min}) + freq_{min}
+\gamma = clamp((\beta_{current} - \beta_{min}) / (\beta_{max} - \beta_{min}), 0.0, 1.0)
+\alpha_{ipc} = \gamma
+\alpha_{stalls} = 1.0 - \gamma
+```
+
+here $`\beta`$ is the heuristic value calculated as $`\beta = \text{L2_Stalls} / \text{Cycles}`$ for the first heuristic and as $`\beta = \text{Instructions} / \text{Cycles}`$ for the second heuristic. As the stalls heuristic is inversely related to the frequency (high stalls/cycle results in a low frequency) the alpha value calculation has to account for that by subtracting from 1.0.
+The value $`\beta_{min}`$ defines the minimum beta value. I.e. for the stalls heuristic with a beta value equal or less than this, the maximum frequency is choosen. For the ipc heuristic the minimum frequency is choosen.
+In the same manner the value $`\beta_{max}`$ defines the maximum beta value.
+
 # Other evaluated heuristics
 ## Memory Stalls/Cycle bounds
 We identified Memory Stalls/Cycle (cycle_activity.stalls_mem_any/cpu_clk_unhalted.thread on Intel) as a great metric to determine the level of memory-boundness a process is experiencing.
