@@ -45,9 +45,9 @@ The heuristic that is used is defined in `memutil_main.c` with either `#define H
 Both heuristics are based on a linear interpolation which chooses the frequency as:
 
 ```math
-freq_{current} = \alpha \cdot (freq_{max} - freq_{min}) + freq_{min}
-\gamma = clamp((\beta_{current} - \beta_{min}) / (\beta_{max} - \beta_{min}), 0.0, 1.0)
-\alpha_{ipc} = \gamma
+freq_{current} = \alpha \cdot (freq_{max} - freq_{min}) + freq_{min}\\
+\gamma = clamp\left(\frac{\beta_{current} - \beta_{min}}{\beta_{max} - \beta_{min}}, 0.0, 1.0\right)\\
+\alpha_{ipc} = \gamma\\
 \alpha_{stalls} = 1.0 - \gamma
 ```
 
