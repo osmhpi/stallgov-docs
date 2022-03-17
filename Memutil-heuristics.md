@@ -51,7 +51,7 @@ freq_{current} = \alpha \cdot (freq_{max} - freq_{min}) + freq_{min}\\
 \alpha_{stalls} = 1.0 - \gamma
 ```
 
-here $`\beta`$ is the heuristic value calculated as $`\beta = \text{L2_Stalls} / \text{Cycles}`$ for the first heuristic and as $`\beta = \text{Instructions} / \text{Cycles}`$ for the second heuristic. As the stalls heuristic is inversely related to the frequency (high stalls/cycle results in a low frequency) the alpha value calculation has to account for that by subtracting from 1.0.
+here $`\beta`$ is the heuristic value calculated as $`\beta = \text{L2Stalls} / \text{Cycles}`$ for the first heuristic and as $`\beta = \text{Instructions} / \text{Cycles}`$ for the second heuristic. As the stalls heuristic is inversely related to the frequency (high stalls/cycle results in a low frequency) the alpha value calculation has to account for that by subtracting from 1.0.
 The value $`\beta_{min}`$ defines the minimum beta value. I.e. for the stalls heuristic with a beta value equal or less than this, the maximum frequency is choosen. For the ipc heuristic the minimum frequency is choosen.
 In the same manner the value $`\beta_{max}`$ defines the maximum beta value.
 
