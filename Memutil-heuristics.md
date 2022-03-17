@@ -25,6 +25,20 @@ Memutil log:
 
 Further research is needed on the behavior of the l2stalls metric at different frequencies, the best behavior at idle, as well as the effects of switching the frequency quickly/radically.
 
+# Current best portable heuristic: frequency interpolation on the instructions/cycle
+Unfortunately we require a very specific counter for the heuristic given above. As this counter
+is not always available (e.g. if an AMD CPU is used) we tried to find a heuristic that uses more generally available counters. The IPC (instructions per cycle) heuristic is the result. The plots on the [Counters Intel](Counters-Intel) and [Counters AMD](Counters-AMD) page show that our workloads that benefit from higher frequency have an IPC of more than 0.4 while workloads that need a lower frequency have a lower IPC like 0.25 for the mg.C workload.
+
+In commit `86ba140e9122f0cae7044a934776dae0d3d922cb` we introduced a heuristic that uses a linear interpolation between the maximum and minimum available frequency depending on the IPC. For an IPC of equal or greater than 0.45 we use the maximum available frequency while for an IPC of 0.1 or less we use the minimum available frequency. These values are tuned for a desktop pc with an AMD Ryzen 9 5900X. However as the values on the Intel Counter page were measured on an Intel 10th gen CPU and show similar IPC values these parameters might be less coupled to a specific system.
+
+Our evaluation shows good results for this heuristic with better performance than schedutil for every workload. However the performance seems to be a bit worse compared to the L2-stalls/cycle based heuristic.
+
+Power/Runtime evaluation:
+![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-erik-amd-ipc/evaluation.png)
+
+Memutil log:
+![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-erik-amd-ipc/log-core0.png)
+
 # Other evaluated heuristics
 ## Memory Stalls/Cycle bounds
 We identified Memory Stalls/Cycle (cycle_activity.stalls_mem_any/cpu_clk_unhalted.thread on Intel) as a great metric to determine the level of memory-boundness a process is experiencing.
