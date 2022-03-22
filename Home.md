@@ -6,15 +6,19 @@ We are focusing on creating a new Linux [CpuFreq Governor](https://www.kernel.or
 See [this page](Background-&-Related-Work)
 
 ## memutil
-Our CpuFreq governor is implemented as a kernel module in the [`kernel-module`](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/tree/master/kernel-module) subfolder of this repository.
-
-To see how to compile & use the kernel module, see the [README in that folder](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/blob/master/kernel-module/README.md).
-
-The broad architecture of memutil is explained [here](Memutil Architecture).
+Our CpuFreq Governor is called memutil. Its broad architecture is explained [here](Memutil Architecture).
 
 For a description of the heuristics in memutil, see: [Memutil Heuristics](Memutil Heuristics)
 
 The different Hardware-Performance counter measurements we tested can be found [here for Intel](Counters Intel) and [here for AMD](Counters AMD)
+
+## Running memutil on your machine
+Our CpuFreq governor is implemented as a kernel module in the [`kernel-module`](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/tree/master/kernel-module) subfolder of this repository.
+
+To see how to compile & use the kernel module, see the [README in that folder](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/blob/master/kernel-module/README.md).
+
+memutil will need adjustment for your specific machine for best performance.
+The [Porting page](Porting) includes instructions of how to tweak the Heuristic parameters.
 
 ## Future Work
 See [this page](Future work).
