@@ -28,3 +28,11 @@ I.e. to limit turbo boost from boosting too high, as that reduces the efficiency
 
 As mentioned in the [Architecture page](Memutil Architecture), it is also possible that the CpuFreq P-state API controls the entire frequency range, including the turbo range.
 Therefore adding support for this API might improve the situation significantly.
+
+## Improved AMD support
+
+As described in the [Memutil Heuristics](Memutil Heuristics) page, the current best heuristic we found is the l2stalls/cycle.
+Unfortunately, the l2stalls counter is a specific to Intel CPUs.
+Therefore we currently cannot replicate the same heuristic on our available AMD CPUs.
+
+We are still working on evaluating the available counters on AMD - see the [appropriate Counters](Counters AMD) page.
