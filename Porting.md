@@ -28,7 +28,7 @@ This section assumes that you read the [heuristics page](Memutil-heuristics), es
 Both heuristics use a linear interpolation for which the parameters $`\beta_{max}`$ and $`\beta_{min}`$ can, and probably should, be tuned by passing their value as module parameter.
 
 ### HEURISTIC_IPC
-Here $`\beta_{max}`$ is called `max_ipc` and if the IPC reaches this value the maximum frequency is choosen. $`\beta_{min}`$ is called `min_ipc`. If that IPC is reached, the minimum frequency will be choosen. Note that these values are given in percent (i.e. $`\beta_{min} = \frac{\text{min_ipc}}{100}`$) and should be between 0 and 100. Also `min_ipc` should be smaller than `max_ipc`.
+Here $`\beta_{max}`$ is called `max_ipc` and if the IPC reaches this value the maximum frequency is choosen. $`\beta_{min}`$ is called `min_ipc`. If that IPC is reached, the minimum frequency will be choosen. Note that these values are given in percent (i.e. $`\beta_{min} = \frac{\text{min\_ipc}}{100}`$) and should be between 0 and 100. Also `min_ipc` should be smaller than `max_ipc`.
 
 Two pass these values to memutil, insert the module as follows: `insmod memutil.ko max_ipc=<some_value> min_ipc=<some_value>`.
 
@@ -40,7 +40,7 @@ The same goes for on-core (i.e. CPU-bound) workloads and the `max_ipc` value.
 
 ### HEURISTIC_OFFCORE_STALLS
 
-Here $`\beta_{max}`$ is called `max_stalls_per_cycle` and if the L2-stalls/cycle reaches this value the **minimum** frequency is choosen. $`\beta_{min}`$ is called `min_stalls_per_cycle`. If that value is reached, the **maximum** frequency will be choosen. Note that these values are given in percent (i.e. $`\beta_{min} = \frac{\text{min_stalls_per_cycle}}{100}`$) and should be between 0 and 100. Also `min_stalls_per_cycle` should be smaller than `max_stalls_per_cycle`.
+Here $`\beta_{max}`$ is called `max_stalls_per_cycle` and if the L2-stalls/cycle reaches this value the **minimum** frequency is choosen. $`\beta_{min}`$ is called `min_stalls_per_cycle`. If that value is reached, the **maximum** frequency will be choosen. Note that these values are given in percent (i.e. $`\beta_{min} = \frac{\text{min\_stalls\_per\_cycle}}{100}`$) and should be between 0 and 100. Also `min_stalls_per_cycle` should be smaller than `max_stalls_per_cycle`.
 
 Two pass these values to memutil, insert the module as follows: `insmod memutil.ko max_stalls_per_cycle=<some_value> min_stalls_per_cycle=<some_value>`.
 
