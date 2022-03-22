@@ -24,7 +24,7 @@ To use this heuristic the line `#define HEURISTIC HEURISTIC_OFFCORE_STALLS` in m
 
 ## Tuning the heuristic
 
-This section assumes that you read the [heuristics page](Memutil-heuristics).
+This section assumes that you read the [heuristics page](Memutil-heuristics), especially the implementation details ([here](Memutil-heuristics#heuristic-implementation-details))
 
 Both heuristics use a linear interpolation for which the parameters $`\beta_{max}`$ and $`\beta_{min}`$ can and probably should be tuned by passing their value as module parameter.
 
