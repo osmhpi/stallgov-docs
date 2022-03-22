@@ -9,35 +9,44 @@ Memutil with the l2stalls heuristic is currently tuned for a laptop based on the
 To improve performance of memutil on your machine, first make sure you can [compile](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/blob/master/kernel-module/README.md) memutil for your kernel and architecture (Intel and AMD only currently).
 
 Then, edit `memutil_main.c`.
-First, make sure the correct Heuristic is used: `HEURISTIC_OFFCORE_STALLS` is recommended for Intel CPUs, `HEURISTIC_IPC` for AMD.
-The `#define HEURISTIC` must be set to the appropriate value.
+First, choose the [heuristic](Memutil-heuristics).
+
+## Using L2-cache stalls
+
+This is the default heuristic used and performs best. However the needed performance counters are not always available.
+As default the counter `cycle_activity.stalls_l2_miss` is used. If this counter is not available `perf list` can be used to get a list of available counters and search for a replacement.
+The alternative counter name can be passed to memutil as parameter as in `insmod memutil.ko event_name3=<replacement counter name>`. Note that it has to be `event_name3` as `event_name1` and `event_name2` are used for other counters.
+
+## Using IPC
+
+This heuristic peforms a bit worse, however it is usable on each computer as it does not use any platform specific counters.
+To use this heuristic the line `#define HEURISTIC HEURISTIC_OFFCORE_STALLS` in memutil_main.c has to be changed to `#define HEURISTIC HEURISTIC_IPC`.
+
+## Tuning the heuristic
+
+This section assumes that you read the [heuristics page](Memutil-heuristics).
+
+Both heuristics use a linear interpolation for which the parameters $`\beta_{max}`$ and $`\beta_{min}`$ can and probably should be tuned by passing their value as module parameter.
 
 ### HEURISTIC_IPC
-`memutil_main.c` contains two values: `max_freq_ipc` and `min_freq_ipc`.
-These two values probably need to be adjusted for your machine.
-`min_freq_ipc` is the IPC (in percent) for which memutil will choose the minimum frequency.
-When `max_freq_ipc` is reached, memutil will choose the maximum frequency.
-In-between values are interpolated linearly.
+Here $`\beta_{max}`$ is called `max_ipc` and if the IPC reaches this value the maximum frequency is choosen. $`\beta_{min}`$ is called `min_ipc`. If that IPC is reached, the minimum frequency will be choosen. Note that these values are given in percent (i.e. $`\beta_{min} = \frac{\text{min_ipc}}{100}`$) and should be between 0 and 100. Also `min_ipc` should be smaller than `max_ipc`.
 
-These values are exposed as kernel module parameters and can be tweaked when inserting the kernel module.
-Therefore it is best to repeatedly insert memutil with different values, then run both an on-core and an off-core bound workload and check whether memutil chooses an appropriate frequency.
+Two pass these values to memutil, insert the module as follows: `insmod memutil.ko max_ipc=<some_value> min_ipc=<some_value>`.
 
-If memutil chooses a wrong frequency for the off-core (i.e. memory-bound) workload, adjust the `min_freq_ipc`.
+It is best to repeatedly insert memutil with different values, then run both an on-core and an off-core bound workload and check whether memutil chooses an appropriate frequency.
+
+If memutil chooses a wrong frequency for the off-core (i.e. memory-bound) workload, adjust the `min_ipc`.
 Increasing the value should reduce the frequency, lowering it should increase the frequency.
-The same goes for on-core (i.e. CPU-bound) workloads and the `max_freq_ipc` value.
+The same goes for on-core (i.e. CPU-bound) workloads and the `max_ipc` value.
 
 ### HEURISTIC_OFFCORE_STALLS
 
-`memutil_main.c` contains two values: `max_freq_stalls_per_cycle` and `min_freq_stalls_per_cycle`.
+Here $`\beta_{max}`$ is called `max_stalls_per_cycle` and if the L2-stalls/cycle reaches this value the **minimum** frequency is choosen. $`\beta_{min}`$ is called `min_stalls_per_cycle`. If that value is reached, the **maximum** frequency will be choosen. Note that these values are given in percent (i.e. $`\beta_{min} = \frac{\text{min_stalls_per_cycle}}{100}`$) and should be between 0 and 100. Also `min_stalls_per_cycle` should be smaller than `max_stalls_per_cycle`.
 
-These two value probably need to be adjusted for your specific machine.
-`min_freq_stalls_per_cycle` is the Minimum l2stalls per cycle (In Percent 0-100) for which memutil will choose the minimum available frequency.
-When `max_freq_stalls_per_cycle` is reached, memutil will choose the maximum available frequency.
-In-between values are interpolated linearly.
+Two pass these values to memutil, insert the module as follows: `insmod memutil.ko max_stalls_per_cycle=<some_value> min_stalls_per_cycle=<some_value>`.
 
-These values are exposed as kernel module parameters and can be tweaked when inserting the kernel module.
-Therefore it is best to repeatedly insert memutil with different values, then run both an on-core and an off-core bound workload and check whether memutil chooses an appropriate frequency.
+It is best to repeatedly insert memutil with different values, then run both an on-core and an off-core bound workload and check whether memutil chooses an appropriate frequency.
 
-If memutil chooses a wrong frequency for the off-core (i.e. memory-bound) workload, adjust the `min_freq_stalls_per_cycle`.
-Increasing the value should reduce the frequency, lowering it should increase the frequency.
-The same goes for on-core (i.e. CPU-bound) workloads and the `max_freq_stalls_per_cycle` value.
+If memutil chooses a wrong frequency for the off-core (i.e. memory-bound) workload, adjust the `max_stalls_per_cycle`.
+Decreasing the value should reduce the frequency, increasing it should increase the frequency.
+The same goes for on-core (i.e. CPU-bound) workloads and the `min_stalls_per_cycle` value: Increasing it will increase the frequency while decreasing it will reduce the frequency.
