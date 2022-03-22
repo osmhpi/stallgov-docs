@@ -25,7 +25,7 @@ To use this heuristic the line `#define HEURISTIC HEURISTIC_OFFCORE_STALLS` in m
 
 This section assumes that you read the [heuristics page](Memutil-heuristics), especially the implementation details ([here](Memutil-heuristics#heuristic-implementation-details))
 
-Both heuristics use a linear interpolation for which the parameters $`\beta_{max}`$ and $`\beta_{min}`$ can and probably should be tuned by passing their value as module parameter.
+Both heuristics use a linear interpolation for which the parameters $`\beta_{max}`$ and $`\beta_{min}`$ can, and probably should, be tuned by passing their value as module parameter.
 
 ### HEURISTIC_IPC
 Here $`\beta_{max}`$ is called `max_ipc` and if the IPC reaches this value the maximum frequency is choosen. $`\beta_{min}`$ is called `min_ipc`. If that IPC is reached, the minimum frequency will be choosen. Note that these values are given in percent (i.e. $`\beta_{min} = \frac{\text{min_ipc}}{100}`$) and should be between 0 and 100. Also `min_ipc` should be smaller than `max_ipc`.
