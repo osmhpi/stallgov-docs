@@ -5,8 +5,8 @@
 
 # ToDo - Evaluierung & Dokumentation
 - [ ] Reproduzierbarkeit
-- [ ] How To: Heuristic an eigenes Gerät anpassen
-- [ ] Heuristik erklären
+- [x] How To: Heuristic an eigenes Gerät anpassen
+- [x] Heuristik erklären
 - [ ] Literaturrecherche - Kontext für unsere Arbeit - Ähnlich zu Intro-Präsi - mehr Detail
 - [x] Verworfene Heuristiken & warum verworfen?
 - [ ] Verfolgte Ideen und nicht-verfolgte Ideen - warum nicht verfolgt? Hat nicht funktioniert vs. Keine Zeit
