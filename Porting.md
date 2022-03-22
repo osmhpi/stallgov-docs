@@ -8,8 +8,7 @@ Memutil with the l2stalls heuristic is currently tuned for a laptop based on the
 
 To improve performance of memutil on your machine, first make sure you can [compile](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/blob/master/kernel-module/README.md) memutil for your kernel and architecture (Intel and AMD only currently).
 
-Then, edit `memutil_main.c`.
-First, choose the [heuristic](Memutil-heuristics).
+Then to choose the [heuristic](Memutil-heuristics).
 
 ## Using L2-cache stalls
 
