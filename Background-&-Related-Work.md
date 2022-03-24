@@ -99,3 +99,32 @@ DVFS on a modern processor should therefore likely focus on not degrading perfor
 ## Static and Dynamic Frequency Scaling on Multicore CPUs - *Bao et al. 2016*
 
 **ToDo**
+
+# Conclusion & New Goal
+
+The research on this topic - especially in regards to compiler optimization - led us to shift the goal of this project.
+We found that optimizations during the existing compilation stage that focus on execution time/performance are sufficient to reduce energy consumption as well.
+Previous research suggests there are also few, if any, opportunities to optimize for energy only during this stage.
+For compiling the rule is "good performance == good energy efficiency".
+As this field is already well researched and modern compilers are already highly optimized for performance, they are also already highly optimized for energy efficiency as a side-effect.
+
+Therefore we want to focus on minimizing the energy by modifying the execution environment during runtime.
+As this is mostly achieved through Dynamic Voltage and Frequency Scaling (DVFS), this is where we decided to focus our attention.
+
+We then focused on evaluating the actual hard- and software that is currently available.
+Researching the current DVFS features of the contemporary Linux Kernel (5.13) revealed that the current CpuFreq governors that control DVFS do not consider memory-boundness when choosing the target frequency.
+Previous research however suggested that memory-boundness is crucial for choosing the most energy-efficient Voltage-Frequency pair.
+
+Therefore we believe it is valuable to evaluate whether this means the current CpuFreq governors can be improved by building a governor based on the memory-boundness of the currently running processes.
+This is the new goal of this Master project.
+Currently we want to determine memory-boundness by the use of hardware performance counters.
+
+In the future the CpuFreq governor could be expanded to also incorporate data from other stages of development (i.e. compile-time or test-time) so that it could make decisions pro-actively, instead of reactively.
+It is also an open question how much cost (in terms of energy or performance) is associated with switching frequencies and whether therefore switching frequencies too radically can reduce performance.
+Furthermore, if frequency switching takes a long time to take effect, the benefits of switching frequency pro-actively would be much greater.
+
+But for now we want to focus on whether we can build a well performing governor with the existing hardware performance counters.
+Our point of comparison will be the "schedutil" governor.
+It makes decisions based on information from the Linux scheduler.
+As it is the newest CpuFreq governor, it is expected to generally perform the best out of the existing Linux governors.
+We are deliberately ignoring proprietary solutions like the Intel P-State driver, as they are not open-source and we can't know the approach it is using.
