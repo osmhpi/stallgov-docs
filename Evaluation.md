@@ -9,7 +9,7 @@ As part of evaluating a DVFS CpuFreq governor must always be finding the ideal c
 
 A resulting diagram from these measurements typically looks like this:
 
-![A typical Frequency-Runtime/Energy diagram](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/blob/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/evaluation.png)
+![A typical Frequency-Runtime/Energy diagram](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/evaluation.png)
 
 The average frequency of any given workload run (as measured by perf) is used as the X-axis value.
 The Y-axis then contains two plots.
