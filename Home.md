@@ -6,11 +6,15 @@ We are focusing on creating a new Linux [CpuFreq Governor](https://www.kernel.or
 See [this page](Background-&-Related-Work)
 
 ## memutil
-Our CpuFreq Governor is called memutil. Its broad architecture is explained [here](Memutil Architecture).
+Our CpuFreq Governor is called memutil.
+It is based on hardware performance counters to determine memory-boundness of the currently active processes.
+Therefore it is probably best if you familiarize yourself with the different hardware performance counters we measured.
+The different Hardware-Performance counter measurements can be found [here for Intel](Counters Intel) and [here for AMD](Counters AMD)
 
-For a description of the heuristics in memutil, see: [Memutil Heuristics](Memutil Heuristics)
+The resulting heuristics in use in memutil, as well as discarded ones are explained on the [Heuristics page](Memutil Heuristics).
 
-The different Hardware-Performance counter measurements we tested can be found [here for Intel](Counters Intel) and [here for AMD](Counters AMD)
+Memutil general architecture is then explained [here](Memutil Architecture).
+
 
 ## Running memutil on your machine
 Our CpuFreq governor is implemented as a kernel module in the [`kernel-module`](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/tree/master/kernel-module) subfolder of this repository.

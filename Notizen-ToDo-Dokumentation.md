@@ -4,7 +4,7 @@
     - Dauer: 30 min. inkl. Fragen
 
 # ToDo - Evaluierung & Dokumentation
-- [ ] Reproduzierbarkeit
+- [x] Reproduzierbarkeit
 - [x] How To: Heuristic an eigenes Gerät anpassen
 - [x] Heuristik erklären
 - [ ] Literaturrecherche - Kontext für unsere Arbeit - Ähnlich zu Intro-Präsi - mehr Detail
