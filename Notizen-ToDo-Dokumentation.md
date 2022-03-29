@@ -16,3 +16,8 @@
 - [x] Graphen aufräumen - memutil & schedutil Punkte statt teil der Linie
 
 - Gerne temporales Format
+
+- [ ] Counters - überschriften mit Counter namen & Beschreibung
+- [ ] Sidebar
+- [ ] Home page - links von "here" -> "Kapitel Name"
+- [ ] Diagramm zu Architektur hinzufügen.
