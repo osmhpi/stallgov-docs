@@ -20,3 +20,4 @@
 - [ ] Counters - überschriften mit Counter namen & Beschreibung
 - [ ] Sidebar
 - [ ] Home page - links von "here" -> "Kapitel Name"
+- [ ] Diagramm zu Architektur hinzufügen.
