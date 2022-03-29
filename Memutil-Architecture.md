@@ -100,7 +100,7 @@ It updates the CPU frequency every time it is called.
 
 **Note:** We set the frequency every time in the update hook, even if we set it to the same frequency we had before. We do this to simplify the code as otherwise we would need to check and track various reasons an update might be needed which would be:
  1. We, ourself, want a different frequency because performance counter values changed.
- 2. The limits (max- and min-frequency) changed so we have to set a new frequency (has to be inside the limits)
+ 2. The limits (max- and min-frequency) changed so we have to set a new frequency (has to be inside the limits).
  3. The driver wants a frequency update.
 
 The update hook does a few checks to make sure the frequency for the current core can actually be set.
