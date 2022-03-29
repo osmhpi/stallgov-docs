@@ -26,7 +26,7 @@ The range of the X-Axis can therefore be different between workloads which needs
 
 #### Fixed vs. dynamic frequency
 The "frequency" and "execution time" curves are created by requesting a fixed frequency at which the workload is to be run.
-As CpuFreq Governors like memutil or schedutil choose frequencies dynamically as needed they behave differently.
+As CpuFreq governors like memutil or schedutil choose frequencies dynamically as needed, they behave differently.
 Therefore their execution time or energy consumption may be outside the curve of fixed frequencies.
 As they don't run at just a single frequency, the X-Axis value of a governor measurement are using the average frequency that the workload actually ran at.
 
@@ -35,11 +35,15 @@ As the CPU driver has final control over the exact DVFS behavior of the cores, i
 We measure and plot the actual frequency, not the requested frequency.
 
 ## Our Evaluation Framework
+The [`evaluation`](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/tree/master/evaluation) folder of our repository contains all the code necessary to measure a workloads energy, execution time and log at different frequencies and with different governors.
 
+#### Dependencies
+- GraphicsMagick
+- Pandas (Python package)
+- matplotlib (Python package)
 
 ## Memutil Evaluation & Comparison
 
 ## Future Work
-
 Measure total system power, not just RAPL counter.
 Our expectation is that this will push the optimal frequency a bit higher, as improvements in execution time will save total system energy due to shorter power consumption by memory, GPU, mainboard, etc.
