@@ -113,3 +113,36 @@ The `stop` method basically undoes everything done in the `start` method, de-all
 
 ## exit
 Exit then frees any resources allocated in the `init` method.
+
+## Note on policies vs cores:
+
+The frequency governors work with policies: One policy defines how the frequency is managed (governor to use etc.) an can be assigned to one or multiple cores. In case it is used for more than one core it is called a shared policy. Reversely there is a mapping of cpu core to the policy that manages this core.
+The governors init, start, stop, exit and limits methods are called per policy and we set the frequency per policy in memutil. The update hook called by the scheduler is always called per core and not per policy.
+
+**However** for all of our tested distributions / platforms there was always a one-to-one mapping of policy to cpu core. I.e. there was always one policy per core and shared policies were not used. Therefore our code only works with non-shared policies and we do not need a special distinction of per-core or per-policy as both are the same.
+
+# Logging
+
+To log key data (requested frequency, performance counter values) with each frequency update we had to create some logging functionality. Writing it into the kernel log is not an option because it would be way to much information that would flood the kernel log that is intended for other things.
+Logging happens in two "phases" in the kernel module and one phase outside the kernel module:
+
+## 1. Ringbuffer
+
+Here the data is written as binary data into a ringbuffer. This means that, if the buffer reaches its end, the buffer will wrap around to the start so that new data will start to override the oldest data. This buffer is intended to be fast, so that data can be logged with every frequency update. That leads to this buffer being small. Additionaly we use one ringbuffer per cpufreq policy (i.e. per cpu-core) which reduces contention. The size can be configured with the default being a size of 2000 elements. With that setting and one frequency update every 5ms this buffer can store data for 10 seconds.
+
+## 2. Logfile
+
+To allow the user to access the data for all cores in textual form we implemented a logfile in the [debugfs](https://www.kernel.org/doc/html/latest/filesystems/debugfs.html) located under `<debugfs>/memutil/log`. This is a virtual filesystem, i.e. the files do not exist in the classical way on a harddrive. Instead functions inside the kernel are called when the user accesses these files. That means for our logfile a read method (`user_read_log` in `memutil_debugfs_logfile.c`) is called when the user wants to read the log. Only when this method is called the ringbuffer data across all cores is collected, converted into a textual representation and provided to the user. For this purpose a second, larger buffer exists that stores this converted textual representation. Also when the user reads the log, the log is cleared afterwards. This way no extra way of clearing the buffers is needed, instead it is already integrated into the reading process. 
+
+## 3. Userspace copy
+
+As the buffers in the kernel only store data for some seconds a userspace script (`copy-log.sh`) is used to copy the log every few seconds and append its data to a persistent logfile somewhere on the harddrive. As the copy also clears the kernel space buffers this way we persist the log and make space for new data to be logged.
+The script not only persists the joined log but also splits it into one log per core to allow easier processing later on. The period with which the log is copied as well as the amount of cores into which the log has to be split can be specified as parameters to the script. The time until the ringbuffer is full is written into the kernel log. Also there exists an infofile under `<debugfs>/memutil/info` that contains the frequency update interval as well as the ringbuffer size. With that the time until the ringbuffer is full can be calculated as:
+```math
+u = update\_time_{seconds}\\
+s = ringbuffer\_size\\
+e = elements\_per\_second\\[14pt]
+e = \frac{1}{u}\\[14pt]
+time_{full} = \frac{s}{e} = \frac{s}{\frac{1}{u}} = s \cdot u\\[14pt]
+\text{Default:   } time_{full} = 2000 \cdot 0.005s = 10s
+```
