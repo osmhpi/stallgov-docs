@@ -8,7 +8,7 @@ For this reason we don't just compare different governors, but also run any give
 
 A resulting diagram from these measurements typically looks like this:
 
-![A typical Frequency-Runtime/Energy diagram](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/evaluation.png)
+![A typical Frequency/Exection time-Energy diagram](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/evaluation.png)
 
 The average frequency of any given workload run (as measured by perf) is used as the X-axis value.
 The Y-axis then contains two plots.
@@ -61,12 +61,40 @@ Running the `plot_multiple.sh` script then visualizes the measurements in two gr
 The `evaluation.png` file contains the energy and execution time measurements, whilst `log.png` visualizes the memutil logs from all workload runs.
 
 ### NAS benchmarks
+We chose 5 workloads from the NAS benchmark suite for our evaluation:
+
+1. cg: Conjugate Gradient
+2. ep: Embarrassingly parallel
+3. ft: Fourier transform
+4. is: Integer sort
+5. mg: Multi-Grid
+
+These workloads can all run in parallel and can therefore simulate a full system load.
 
 #### evaluation.png
-![A typical Frequency-Runtime/Energy diagram](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/evaluation.png)
+![Evaluation graphic for the NAS benchmarks](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/evaluation.png)
 
 #### log.png
-![A typical Frequency-Runtime/Energy diagram](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/log.png)
+![Memutil logs for the NAS benchmarks](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/log.png)
+
+The measurements in these graphs are from the `evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/` folder.
+They were conducted on a Gigabyte Aero 14 (GTX 1060) with an i7-6700HQ running Fedora Linux on Kernel 5.15.
+Memutil used the L2Stalls heuristic.
+
+For this particular machine, the `mg` and `cg` workloads are the only ones that were clearly off-core-bound as they show only small execution time benefit after a certain frequency is reached.
+`ft` seems to be a mix of off-core, as well as on-core bound, as it still benefits from increased frequency in execution time but starts to consume more energy relatively early in the frequency range.
+
+For the NAS benchmarks, memutil correctly reduced the frequency for `mg` and `cg`, and yielded reduced energy consumption compared to schedutil by ~20% and ~29% respectively.
+The execution time was increased by &lt;1% for `mg` and by 26% for `cg`.
+For `ft`, energy consumption was reduced by ~14%, whilst execution time increased by ~6%.
+
+In all cases where memutil deviated from schedutils behavior it was able to save more energy than it increased execution time.
+The execution time/energy curves for `cg` also lead us to believe that with further tuning, memutil could save a similar amount of energy whilst improving execution time penalty to &lt;10%.
+These measurements confirm that to reduce energy consumption the current DVFS behavior of the schedutil CpuFreq Governor can be improved by taking memory behavior of the workload into account.
+
+### OpenBenchmarking test suite
+
+## Conclusion
 
 ## Future Work
 Measure total system power, not just RAPL counter.
