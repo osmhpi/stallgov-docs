@@ -1,4 +1,3 @@
-
 For the evaluation of the memutil governor, we mostly focus on two metrics: "execution time" and "energy consumption".
 We currently measure the energy consumption using the RAPL counters directly available within modern x86 CPUs.
 These counters are very precise but only measure CPU energy consumption, not total system energy consumption.
@@ -37,12 +36,37 @@ We measure and plot the actual frequency, not the requested frequency.
 ## Our Evaluation Framework
 The [`evaluation`](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/tree/master/evaluation) folder of our repository contains all the code necessary to measure a workloads energy, execution time and log at different frequencies and with different governors.
 
+See the README files in the `evaluation` folder for an explanation & usage of the different scripts.
+
 #### Dependencies
 - GraphicsMagick
 - Pandas (Python package)
 - matplotlib (Python package)
 
 ## Memutil Evaluation & Comparison
+Our goal for memutil is to reduce total energy consumed by a given workload.
+The execution time of the workload is currently not our priority.
+Our target platform is a modern laptop that runs on battery power.
+Therefore saving battery power is more important than execution time.
+Typical workloads, like compiling code or running tests can be done in the background, whilst the device is still in normal
+when the device is on battery power the workloads don't need to complete as fast as possible.
+From our perspective it is more important that the device can stay operational for a longer period of time.
+For this reason, we measure the total energy consumed by a given workload in Joules.
+
+To gain a broader picture of the workloads energy consumption characteristics, we run each workload at different frequencies and with the schedutil, as well as memutil governors.
+To ensure we don't accidentally measure an outlier, we run the workloads 3 times for any given frequency/governor.
+The `evaluate_benchmarks.sh` script performs these measurements for a given list of workloads.
+
+Running the `plot_multiple.sh` script then visualizes the measurements in two graphs: `evaluation.png` and `log.png`.
+The `evaluation.png` file contains the energy and execution time measurements, whilst `log.png` visualizes the memutil logs from all workload runs.
+
+### NAS benchmarks
+
+#### evaluation.png
+![A typical Frequency-Runtime/Energy diagram](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/evaluation.png)
+
+#### log.png
+![A typical Frequency-Runtime/Energy diagram](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/log.png)
 
 ## Future Work
 Measure total system power, not just RAPL counter.
