@@ -18,7 +18,7 @@ The other workloads are not off-core-bound and therefore don't benefit from freq
 
 Therefore we believe that, for now, focusing on improving the behavior of our governor based on this heuristic is the best approach - at least for Intel processors.
 
-Power/Runtime evaluation:
+Power/Execution Time evaluation:
 ![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/evaluation.png)
 
 Memutil log:
@@ -34,8 +34,8 @@ In commit `86ba140e9122f0cae7044a934776dae0d3d922cb` we introduced a heuristic t
 
 Our evaluation shows good results for this heuristic with better performance than schedutil for every workload. However the performance seems to be a bit worse compared to the L2-stalls/cycle based heuristic.
 
-Power/Runtime evaluation:
-![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-erik-amd-ipc/evaluation.png)
+Power/Execution Time evaluation:
+![tmp](uploads/2fcedcb7d999859c804f8785455fabd0/tmp.png)
 
 Memutil log:
 ![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-erik-amd-ipc/log-core0.png)
