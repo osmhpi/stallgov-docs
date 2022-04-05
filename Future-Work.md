@@ -1,9 +1,11 @@
 # Future Work
 ## Idle Behavior
-As we have demonstrated, memutil can save a significant amount of energy to whilst only slightly reducing workload execution time.
+As we have demonstrated, memutil can save a significant portion of energy compared to the schedutil governor.
 However, memutil currently only tracks how much the processor is stalled by memory access, not how much overall load it is experiencing.
 
-Therefore, if the processor has little load, this will result in few memory stalls, which memutil interprets as running an on-core-bound process, which leads to increased frequency, even though the small load would have still executed quickly enough on a lower clock frequency.
+Therefore, if the processor has little load, our theory is that this will result in few memory stalls, which memutil interprets as running an on-core-bound process, which leads to increased frequency, even though the small load would have still executed quickly enough on a lower clock frequency.
+Generally, idle behavior needs to be examined more closely.
+Especially studying the combined effects of sleep states together with DVFS behavior is not in the scope of this project.
 
 ### Combining memutil&schedutil
 Schedutil currently deals well with system idle, as it makes decisions based on scheduler information.
