@@ -15,6 +15,8 @@ The resulting heuristics in use in memutil, as well as discarded ones are explai
 
 Memutil general architecture is then explained [here](Memutil Architecture).
 
+We have evaluated memutil on a set of workloads.
+The results of this evaluation can be found on the [Evaluation page](Evaluation)
 
 ## Running memutil on your machine
 Our CpuFreq governor is implemented as a kernel module in the [`kernel-module`](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/tree/master/kernel-module) subfolder of this repository.
