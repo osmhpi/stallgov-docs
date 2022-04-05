@@ -1,4 +1,5 @@
-For the development of Memutil, we are testing & evaluating different heuristics, to achieve the optimal performance/Watt. The different heuristics we came up with are explained here.
+For the development of Memutil, we are testing & evaluating different heuristics, to achieve the optimal performance/Joule.
+The different heuristics we came up with are explained here.
 
 # General problem
 Figure out how memory-bound a workload is.
