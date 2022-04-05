@@ -46,11 +46,11 @@ See the README files in the `evaluation` folder for an explanation & usage of th
 ## Memutil Evaluation & Comparison
 Our goal for memutil is to reduce total energy consumed by a given workload.
 The execution time of the workload is currently not our priority.
-Our target platform is a modern laptop that runs on battery power.
+Our target platform is a contemporary laptop that runs on battery power.
 Therefore saving battery power is more important than execution time.
-Typical workloads, like compiling code or running tests can be done in the background, whilst the device is still in normal
-when the device is on battery power the workloads don't need to complete as fast as possible.
-From our perspective it is more important that the device can stay operational for a longer period of time.
+Typical workloads, like compiling code or running tests can be done in the background, whilst the device is still in normal use.
+When the device is on battery power the workloads don't need to complete as fast as possible.
+From our perspective it is more important that the device can stay operational for a longer period of time, not how fast the workloads run.
 For this reason, we measure the total energy consumed by a given workload in Joules.
 
 To gain a broader picture of the workloads energy consumption characteristics, we run each workload at different frequencies and with the schedutil, as well as memutil governors.
