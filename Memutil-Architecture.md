@@ -1,3 +1,13 @@
+# Overview Images
+
+This first image provides an overview for the fast frequency-switch case described below.
+
+![Fast-Switch-Interaction.svg](uploads/17c689a94605ad64610fa36368a10ad2/Fast-Switch-Interaction.svg)
+
+This second image shows the slow frequency-switch case described below. Note that it is identical to the fast switch case with the exception of a kernel thread being used for updating the frequency.
+
+![Slow-Switch-Interaction.svg](uploads/b76e746ec1ebd2036b55da689c9ec091/Slow-Switch-Interaction.svg)
+
 # CpuFreq Basics
 The Linux kernel needs to make sure the CPU(s) it is running on are used to the best of their performance in terms of performance and power-consumption.
 For this reason, it includes a CPU Performance Scaling mechanism called CpuFreq that allows the CpuFreq governors to switch the performance/power state of the CPU.
@@ -76,11 +86,11 @@ It is responsible for setting up the policy data, performance counters, starting
 The performance counters required by memutil are allocated in the `memutil_start` method and de-allocated in the `memutil_stop` method.
 
 The linux kernel has two types of available events. 
-- "Named events"
+- "Named events" or what we call "portable events" in our code
     - Are common to most architectures (like number of elapsed cycles).
     - There are only few of these and are therefore relatively limiting.
     - Documentation on these can be found in the documentation of the `config` variable in the [`perf_event_open` documentation](https://man7.org/linux/man-pages/man2/perf_event_open.2.html).
-- "Raw events"
+- "Raw events" or what we call "platform events" in our code
     - Each CPU has its own performance counters, that can be accessed by writing a custom binary value into the `config` field of the `perf_event_open` call.
     - The difficulty with these events is determining which binary values to set them to.
     - perf has a giant table of the event codes for each supported hardware platform. We use this table in a simplified form (REGEX is not supported in the kernel) in the pmu_events.c/.h files.
@@ -91,25 +101,27 @@ For reading the performance counters we must also use the `memutil_perf_event_re
 This method is a duplicate of an internal kernel method, which unfortunately isn't exported to kernel modules.
 It is important that it is the `_local` read call, as the non-local read will cause the kernel to deadlock.
  
-### Update hook - `memutil_update_single_frequency`
+### Update hook - `memutil_update_frequency_hook`
 The update hook is a method that the CpuFreq governor registers with the kernel.
-It will be called by the kernel periodically which allows the governor to change the frequency at that point.
+It will be called by the kernel scheduler periodically which allows the governor to change the frequency at that point.
 
-In memutil, the update hook is the `memutil_update_single_frequency` method.
-It updates the CPU frequency every time it is called.
+In memutil, the update hook is the `memutil_update_frequency_hook` method.
+It updates the CPU frequency every time it is called (if possible and needed).
 
 **Note:** We set the frequency every time in the update hook, even if we set it to the same frequency we had before. We do this to simplify the code as otherwise we would need to check and track various reasons an update might be needed which would be:
  1. We, ourself, want a different frequency because performance counter values changed.
  2. The limits (max- and min-frequency) changed so we have to set a new frequency (has to be inside the limits).
  3. The driver wants a frequency update.
 
-The update hook does a few checks to make sure the frequency for the current core can actually be set.
-Then it calls the `memutil_update_frequency` method, which reads the performance counters, chooses an appropriate frequency and then sets the frequency.
-This is done either by using a fast-switch call, or by storing the requested frequency so it can be updated later by the kernel thread responsible for slow switching the frequency.
+The update hook does a few checks to make sure the frequency for the current core can actually be set (i.e. The core was called to perform a frequency update for itself and not another core. In that case remote setting of frequency has to be supported). It also checks whether enough time has passed so that an update should be done. For this update time the preferred cpufreq driver update time is used (with a lower bound of at least 5ms). This leads to update times of 5ms to 10ms for our systems.
+ 
+Then the hook calls the `memutil_update_frequency` method, which reads the performance counters, chooses an appropriate frequency and then sets the frequency.
+This is done either by using a fast-switch call, or by storing the requested frequency and queuing a frequency update on the kernel thread so it can update the frequency using slow switching.
 For an explanation of how the frequency is chosen, see the [Heuristics page](Memutil Heuristics).
 
 ## stop
 The `stop` method basically undoes everything done in the `start` method, de-allocating the performance counters, etc.
+It also makes sure that the kernel thread finished any pending frequency updates.
 
 ## exit
 Exit then frees any resources allocated in the `init` method.
