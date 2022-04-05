@@ -1,14 +1,10 @@
 # Background
+
 For this master project, our initial goal was to find ways to improve runtime energy consumption of a program with the help of compiler optimizations.
 
 The idea was to find instructions that would reduce energy consumption without changing the result of the program.
 
 In our [initial presentation](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/blob/master/resources/Initial%20Presentation.pdf), we discussed the Related work on this topic, which led us to defining our new goal for this master project.
-
-For each of the papers, there should exist 3 files:
-1. .pdf - The paper itself
-2. .txt - A pdftotext conversion of the paper, good for searchability
-3. .md - Our notes&thoughts regarding the paper *(does not exist for all papers)*
 
 A fundamental concept in runtime energy-efficiency is the classification of tasks as either memory-bound, or compute-bound.
 Memory-bound tasks benefit from reduced CPU clock frequency, as the CPU is stalled for memory most of the time and additional cycles do not benefit the overall performance (Known as crawl-to-sleep).
@@ -16,6 +12,7 @@ For CPU-bound workloads however it is usually best to run at high clock frequenc
 ![Energy-Efficiency-Fundamentals](uploads/f03d01ba5fcc09337051337e2865cd91/Energy-Efficiency-Fundamentals.png)
 
 # Related Work
+
 In this section, we highlight some of the most important research resources we used to gain an understanding of the problem domain and to define our goals and expectations.
 
 We follow the same path of research papers here as we did in our initial presentation.
@@ -23,7 +20,13 @@ We follow the same path of research papers here as we did in our initial present
 
 For a complete list of research papers & our notes, see the [literature folder](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/tree/master/literature) in the main repository.
 
+For each of the papers, there should exist 3 files:
+1. .pdf - The paper itself
+2. .txt - A pdftotext conversion of the paper, good for searchability
+3. .md - Our notes & thoughts regarding the paper *(does not exist for all papers)*
+
 ## Processor Cruise Control - *Bellosa et al. 2002*
+
 This paper outlines a process that uses processor performance counters to identify how memory-bound a process is and adjust the dynamic voltage and frequency scaling (DVFS) accordingly.
 
 For memory-bound workloads this results in only small decreases in performance, whilst achieving significant power savings.
@@ -33,6 +36,7 @@ As this paper is from 2002, its relevance for modern processors can be questione
 However, it backs up the initial assumption that memory-bound workloads benefit from reduced clock frequency.
 
 ## Compile-time dynamic voltage scaling settings - *Xie et al. 2003*
+
 "Processor Cruise Control" used reactive DVFS to achieve reduced runtime energy consumption.
 This leaves the question whether this can also be achieved pro-actively, i.e. by analyzing the code at compile-time and inserting the appropriate frequency-scaling instructions.
 
@@ -50,6 +54,7 @@ It seems the result of their work in this regard is that continually switching b
 An open question here is how many voltage/frequency pairs are available on a modern CPU and whether the approach of switching between them still leads to closer to ideal results.
 
 ## Post-Compiler Optimization - *Schulte et al. 2014*
+
 As our initial goal for this project was to reduce the energy footprint by means of compiler-optimization, we took a look at this paper, which discussed post-compiler optimization for energy.
 
 It optimized on the compiler-generated assembly code using a machine learning model that mutated the code and used testing to see whether the changes were still valid.
@@ -68,6 +73,7 @@ Due to the breadth of that field, we chose to not focus on this for now.
 Instead we went back to investigating DVFS, as that is the established way to reduce energy consumption of a program, without altering its behavior.
 
 ## Characterizing the impact of memory-intensity levels - *Kotla et al. 2004*
+
 This paper is still somewhat connected to our previous research on heterogeneous computing, as it investigates computing on heterogeneous processors, with different kind of processing cores, similar to ARMs Big.Little Architecture.
 They tried to find the best core to run a given workload.
 For the workloads they used different synthetic benchmarks.
@@ -79,11 +85,13 @@ Different from Bellosa, they also take IPC counters into consideration as well.
 Like the other papers regarding DVFS, they also demonstrate significant energy savings whilst only observing a slight increase in runtime.
 
 ## Dynamic Voltage and Frequency Scaling: The Laws of Diminishing Returns - *Le Sueur et al. 2010*
+
 In contrast to the previous papers, this paper outlines the future of DVFS, assuming that due to increased transistor leakage and therefore increased static power demand, the benefits of DVFS will be less noticeable, or even diminished in the near future.
 
-Due to these concerns, we will need to validate the benfits of DVFS for the modern processor architectures that currently exist.
+Due to these concerns, we will need to validate the benefits of DVFS for the modern processor architectures that currently exist.
 
 ## Application-Specific Performance-Aware Energy Optimization - *Rao et al. 2017*
+
 As we still had the initial idea of compile-time energy optimizations in mind, we also searched for more literature in that direction.
 
 Even though our current understanding is that compile-time estimation of runtime-characteristics is difficult at best, there can still be benefit to assess the characteristics of an application off-line.
@@ -98,7 +106,11 @@ DVFS on a modern processor should therefore likely focus on not degrading perfor
 
 ## Static and Dynamic Frequency Scaling on Multicore CPUs - *Bao et al. 2016*
 
-**ToDo**
+Another approach was explored in this paper, which worked around inherit limitations of existing simple DVFS approaches resulting from processor- and application-specific effects. Instead of monitoring the execution of a program (on-line profiling) or optimizing for a well suited pair of memory and CPU frequency (off-line source code analysis), this paper works on a runtime algorithm which automatically finds a good frequency which improves energy efficiency while also working for any processor.
+
+Their approach resulted in a compilation framework which is trained on the target CPU using a one-time profiling. Any program can then be optimized at compile-time by automatically selecting a frequency and number of cores for affine program regions (loop-based code segments) which were categorized based on approximated operational intensity and parallel scaling potential.
+
+Similar to Rao et al., their evaluation (using 60 benchmarks over 5 multi-core CPUs - Sandy Bridge/Ivy Bridge/Haswell Architecture) showed significant energy savings and energy-delay product improvements over the "powersave" Linux frequency governor and "on-demand" governor while minimizing execution time penalties.
 
 # Conclusion & New Goal
 
