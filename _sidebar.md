@@ -2,7 +2,9 @@
 
 - [Background & Related Work](Background & Related Work)
 - memutil Development
-    - Measured Counters ([Intel](Counters Intel) & [AMD](Counters AMD))
+    - Measured Counters
+        - [Intel](Counters Intel)
+        - [AMD](Counters AMD))
     - [Heuristics](Memutil-Heuristics)
     - [Architecture](Memutil-Architecture)
 - [Evaluation](Evaluation)
