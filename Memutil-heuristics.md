@@ -35,7 +35,7 @@ In commit `86ba140e9122f0cae7044a934776dae0d3d922cb` we introduced a heuristic t
 Our evaluation shows good results for this heuristic with better performance than schedutil for every workload. However the performance seems to be a bit worse compared to the L2-stalls/cycle based heuristic.
 
 Power/Execution Time evaluation:
-![tmp](uploads/2fcedcb7d999859c804f8785455fabd0/tmp.png)
+![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-erik-amd-ipc/evaluation.png)
 
 Memutil log:
 ![](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-erik-amd-ipc/log-core0.png)
