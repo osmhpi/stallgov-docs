@@ -92,9 +92,34 @@ In all cases where memutil deviated from schedutils behavior it was able to save
 The execution time/energy curves for `cg` also lead us to believe that with further tuning, memutil could save a similar amount of energy whilst improving execution time penalty to &lt;10%.
 These measurements confirm that to reduce energy consumption the current DVFS behavior of the schedutil CpuFreq Governor can be improved by taking memory behavior of the workload into account.
 
-### OpenBenchmarking test suite
+### OpenBenchmarking tests
+After tuning memutil for the NAS benchmark suite we used the OpenBenchmarking test set, instrumented by the Phoronix Test suite, to try and confirm the positive results achieved in the NAS benchmarks.
+
+The code we used to run these benchmarks can be found in the [`evalution/openbenchmarking`](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/tree/master/evaluation/openbenchmarking) folder.
+
+#### evaluation.png
+![Evaluation graphic for the OpenBenchmarking tests](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-openbenchmarking/evaluation.png)
+
+#### log.png
+![Memutil log graphic for the OpenBenchmarking tests](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-openbenchmarking/log.png)
+
+If you take a closer look at the x-axes of the `evaluation.png`, many of the measurements only have a very small frequency range.
+This is likely caused by the benchmarks not utilizing the system fully, which causes idle time to skew our measurements.
+As we currently don't know what the exact cause of this behavior is and do not know the ideal frequency for these workloads it is hard to draw conclusions from these measurements.
+
+The measurements that showed a complete usage curve all seemed to be on-core bound - apart from sysbench - and therefore reducing the frequency does not grant any benefit.
+memutil did correctly identify these workloads as on-core-bound, but therefore behaved similar to schedutil.
+
+Note that sysbench seemed to be highly off-core-bound, but did not produce many l2stalls.
+Therefore memutil chose a frequency that is too high.
+Further research is needed into which performance counters could correctly identify sysbench as off-core-bound.
+
+Generally, we still need to improve both our evaluation as well as memutils behavior for workloads that do not fully load our system.
+We theoretically have the problem here that the idle process doesn't produce a lot of memory stalls, therefore memutil will choose the maximum frequency, which is of course not ideal.
+See the [Future Work](Future Work) page for this as well.
 
 ## Conclusion
+
 
 ## Future Work
 Measure total system power, not just RAPL counter.
