@@ -103,11 +103,15 @@ The code we used to run these benchmarks can be found in the [`evalution/openben
 #### log.png
 ![Memutil log graphic for the OpenBenchmarking tests](https://gitlab.hpi.de/osm/osm-energy/masterprojekt-ws21-compendium/-/raw/master/evaluation/results/memutil-l2stall-lerp-leon-laptop-openbenchmarking/log.png)
 
+The measurements in these graphs are from the `evaluation/results/memutil-l2stall-lerp-leon-laptop-nas/` folder.
+They were conducted on a Gigabyte Aero 14 (GTX 1060) with an i7-6700HQ running Fedora Linux on Kernel 5.15.
+Memutil used the L2Stalls heuristic.
+
 If you take a closer look at the x-axes of the `evaluation.png`, many of the measurements only have a very small frequency range.
 This is likely caused by the benchmarks not utilizing the system fully, which causes idle time to skew our measurements.
 As we currently don't know what the exact cause of this behavior is and do not know the ideal frequency for these workloads it is hard to draw conclusions from these measurements.
 
-The measurements that showed a complete usage curve all seemed to be on-core bound - apart from sysbench - and therefore reducing the frequency does not grant any benefit.
+The measurements that showed a complete frequency range all seemed to be on-core bound - apart from sysbench - and therefore reducing the frequency does not grant any benefit.
 memutil did correctly identify these workloads as on-core-bound, but therefore behaved similar to schedutil.
 
 Note that sysbench seemed to be highly off-core-bound, but did not produce many l2stalls.
@@ -119,8 +123,16 @@ We theoretically have the problem here that the idle process doesn't produce a l
 See the [Future Work](Future Work) page for this as well.
 
 ## Conclusion
+For workloads that fully load all cores of our system, memutil can already achieve significant energy savings of over 20%.
+We currently cannot validate these findings on the OpenBenchmarking test suite, as the test suite did not fully load our system.
+Further research is needed into memutils behavior at idle, especially the effects of DVFS in these cases, especially in combination with processor sleep states.
+Both our evaluation, as well as memutil itself must therefore still be improved for workloads that spend a lot of time idle.
 
+We still conclude that energy efficiency can be improved by taking memory access characteristics into account, given a workload which doesn't idle and is bound by memory that is not part of the cores frequency domain.
+memutil also has potential for improvement with better calibration, as demonstrated by the "Conjugate Gradient" NAS benchmark.
 
 ## Future Work
-Measure total system power, not just RAPL counter.
+- Evaluate the measurements done on AMD using the IPC heuristic.
+- Improve memutil behavior & evaluation at idle.
+- Measure total system power, not just RAPL counter.\
 Our expectation is that this will push the optimal frequency a bit higher, as improvements in execution time will save total system energy due to shorter power consumption by memory, GPU, mainboard, etc.

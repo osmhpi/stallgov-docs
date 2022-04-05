@@ -36,3 +36,12 @@ Unfortunately, the l2stalls counter is a specific to Intel CPUs.
 Therefore we currently cannot replicate the same heuristic on our available AMD CPUs.
 
 We are still working on evaluating the available counters on AMD - see the [appropriate Counters](Counters AMD) page.
+
+## Automatic Calibration
+
+Currently memutil still needs to be calibrated for each machine manually.
+This process is tedious, error prone and imprecise.
+Ideally, memutil would automatically calibrate itself for the system it is running on.
+For this, a list of predefined workloads could be run to measure the l2stalls/cycle as well as IPC on the current machine.
+The heuristic values could then be adapted as indicated by the measurements.
+Even better would be to continually measure the effects of memutil on power consumption and improve the heuristic parameters on-the-fly.
