@@ -92,6 +92,12 @@ In all cases where memutil deviated from schedutils behavior it was able to save
 The execution time/energy curves for `cg` also lead us to believe that with further tuning, memutil could save a similar amount of energy whilst improving execution time penalty to &lt;10%.
 These measurements confirm that to reduce energy consumption the current DVFS behavior of the schedutil CpuFreq Governor can be improved by taking memory behavior of the workload into account.
 
+Also note how even on-core-bound workloads start to increase in energy usage once a certain threshold voltage is reached.
+This is not entirely in line with previous research, which suggests that for on-core-bound workloads, increasing the frequency will result in lower energy consumption, as the CPU can return to idle sooner.
+We also noticed that for the i7-6700HQ, this frequency seems to be close to the Turbo-Boost threshold voltage of 2.6GHz, at which point the CPU frequency leaves its base frequency.
+Unfortunately the CpuFreq Governor can not control this frequency range, which is why we do not consider it fault of memutil, that it ran at sub-optimal frequencies there.
+It remains future work to evaluate whether it is possible to control the turbo boost behavior.
+
 ### OpenBenchmarking tests
 After tuning memutil for the NAS benchmark suite we used the OpenBenchmarking test set, instrumented by the Phoronix Test suite, to try and confirm the positive results achieved in the NAS benchmarks.
 
