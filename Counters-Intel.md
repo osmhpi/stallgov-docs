@@ -1,5 +1,11 @@
 For the evaluation of the measurements, see the "Evaluation" section at the [bottom of this page](#evaluation)
 
+# Measurement setup:
+
+We used our memutil governor to measure the values of the selected perf events. For this we changed memutil to always set the max frequency in the update frequency step and just log the counters. Additionally we adjusted our scripts to just do memutil measurements. Lastly additional scripts where used to simplify measurement and plotting with one command.
+
+The modified `memutil_main.c` as well as the modified scripts are available in the `evaluation/counter-measurements` folder. 
+
 # Measured Counters:
 
 | Title | Counter 1 | Counter 2 | Counter 3 | plot_op | plot names |
@@ -32,6 +38,12 @@ counters = [{'counter': ['cycle_activity.cycles_l1d_miss', 'cycle_activity.stall
             {'counter': ['cycle_activity.stalls_total', 'cycle_activity.stalls_mem_any', 'cpu_clk_unhalted.thread'], 'title': 'Stall_Total_vs_Mem-Stall', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Stalls Total', 'Mem Stalls']},
             {'counter': ['arith.divider_active', 'inst_retired.any', 'cpu_clk_unhalted.thread'], 'title': 'Divider cycles vs IPC', 'plot_op': 'div_1_3+div_2_3', 'plot_names': ['Divider Cycles', 'IPC']}]
 ```
+
+The table shows which counters we measured and how we plotted them. The title is the title of the plot. The next 3 columns identifies which counters we measured. The plot ops mean the following:
+ - `div_1_3+div_2_3` One plot of $`counter1 / counter3`$ and one of $`counter2 / counter3`$
+ - `div_1_(1+2)` One plot for $`\frac{counter1}{counter2 + counter3}`$
+
+The plot names are given in order, i.e. the first name is used for the first plot, the second name is used for the second plot, etc.
 
 # Just Core 0
 
